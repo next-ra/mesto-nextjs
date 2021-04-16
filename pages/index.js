@@ -1,5 +1,5 @@
 import Head from 'next/head';
-
+import Profile from '../components/user/profile';
 const HomePage = () => {
   return (
     <div>
@@ -7,6 +7,7 @@ const HomePage = () => {
         <title>NextJS Mesto</title>
         <link rel="icon" href="/favicon-mesto.ico" />
       </Head>
+      <Profile />
     </div>
   );
 };

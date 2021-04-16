@@ -1,0 +1,71 @@
+.info {
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  color: white;
+  width: 100%;
+}
+
+.button_edit {
+  width: 38px;
+  height: 18px;
+  font-size: 12px;
+  background-color: black;
+  color: white;
+  margin-top: 25px;
+  display: inline-block;
+}
+
+.button_place {
+  position: absolute;
+  top: 16px;
+  right: 0;
+}
+
+.data {
+  max-width: 364px;
+  margin-left: 36px;
+}
+
+.job {
+  margin: 20px 0 0 0;
+  font-size: 20px;
+  line-height: 25px;
+}
+.name {
+  margin: 0;
+  font-weight: normal;
+  font-size: 54px;
+  line-height: 56px;
+}
+.photo {
+  width: 150px;
+  height: 150px;
+  min-width: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 1s;
+}
+.photo:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+@media screen and (max-width: 980px) {
+  .info {
+    flex-direction: column;
+    align-items: center;
+  }
+  .button_place {
+    position: static;
+    margin-bottom: 40px;
+  }
+  .photo {
+    margin-top: 40px;
+  }
+  .data {
+    margin: 20px 0;
+    text-align: center;
+  }
+}

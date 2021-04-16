@@ -18,7 +18,7 @@ const HomePage = ({ cards }) => {
 
 export const getStaticProps = async () => {
   const cards = await getAllCards();
-  console.log(cards);
+
   return {
     props: { cards },
     revalidate: 1800,

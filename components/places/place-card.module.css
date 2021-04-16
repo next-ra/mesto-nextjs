@@ -35,6 +35,10 @@
   right: 15px;
   cursor: pointer;
   display: block;
+  transition: transform 0.4s;
+}
+.delete-icon:hover {
+  transform: scale(1.2);
 }
 
 .delete-icon:disabled {

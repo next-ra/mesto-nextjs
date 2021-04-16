@@ -1,0 +1,86 @@
+.place-card {
+  width: 282px;
+  background-color: #fff;
+  border-radius: 10px;
+  min-height: 360px;
+}
+
+.image {
+  height: 282px;
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+}
+
+.image::after {
+  content: '';
+  display: block;
+  width: 282px;
+  height: 282px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.delete-icon {
+  background: url(../../public/trash-icon.svg) center no-repeat;
+  background-color: transparent;
+  border: none;
+  width: 18px;
+  height: 20px;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  cursor: pointer;
+  display: block;
+}
+
+.delete-icon:disabled {
+  display: none;
+}
+
+.description {
+  display: flex;
+  min-height: 78px;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 22px;
+}
+.name {
+  margin: 0;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.like-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.like-icon {
+  background: url(../../public/like-inactive.svg) center no-repeat;
+  background-color: transparent;
+  border: none;
+  width: 21px;
+  height: 19px;
+  cursor: pointer;
+  transition: transform 0.3s linear;
+  margin-bottom: 5px;
+}
+
+.like-icon_liked {
+  background-image: url(../../public/like-active.svg);
+}
+
+.like-icon:hover {
+  transform: scale(1.03);
+}
+
+.like-counter {
+  margin: 0;
+  padding-left: 5px;
+}

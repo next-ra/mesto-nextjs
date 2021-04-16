@@ -1,7 +1,7 @@
 import styles from './place-card.module.css';
 
 const PlaceCard = (props) => {
-  const { image, name, id } = props;
+  const { image, name, id, likes } = props;
   return (
     <div className={styles['place-card']} id={id}>
       <div
@@ -10,13 +10,13 @@ const PlaceCard = (props) => {
           backgroundImage: `url(${image})`,
         }}
       >
-        <button disabled className={styles['delete-icon']} />
+        <button className={styles['delete-icon']} />
       </div>
       <div className={styles.description}>
         <h3 className={styles.name}>{name}</h3>
         <div className={styles['like-box']}>
           <button className={styles['like-icon']} />
-          <p className={styles['like-counter']}>0</p>
+          <p className={styles['like-counter']}>{likes.length || 0}</p>
         </div>
       </div>
     </div>

@@ -1,34 +1,9 @@
 import Head from 'next/head';
 import PlacesList from '../components/places/places-list';
 import Profile from '../components/user/profile';
-const HomePage = () => {
-  const DUMMY_CARDS = [
-    {
-      id: 1,
-      name: 'test',
-      image:
-        '"https://images.unsplash.com/photo-1536431311719-398b6704d4cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"',
-    },
-    {
-      id: 2,
-      name: 'test',
-      image:
-        '"https://images.unsplash.com/photo-1536431311719-398b6704d4cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"',
-    },
-    {
-      id: 3,
-      name: 'test',
-      image:
-        '"https://images.unsplash.com/photo-1536431311719-398b6704d4cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"',
-    },
-    {
-      id: 4,
-      name: 'test',
-      image:
-        '"https://images.unsplash.com/photo-1536431311719-398b6704d4cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"',
-    },
-  ];
 
+import { getAllCards } from '../helpers/api-util';
+const HomePage = ({ cards }) => {
   return (
     <div>
       <Head>
@@ -36,9 +11,18 @@ const HomePage = () => {
         <link rel="icon" href="/favicon-mesto.ico" />
       </Head>
       <Profile />
-      <PlacesList cards={DUMMY_CARDS} />
+      <PlacesList cards={cards} />
     </div>
   );
+};
+
+export const getStaticProps = async () => {
+  const cards = await getAllCards();
+  console.log(cards);
+  return {
+    props: { cards },
+    revalidate: 1800,
+  };
 };
 
 export default HomePage;

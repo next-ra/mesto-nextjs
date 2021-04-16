@@ -6,10 +6,11 @@ const PlacesList = ({ cards }) => {
     <div className={styles.list}>
       {cards.map((card) => (
         <PlaceCard
-          key={card.id}
-          id={card.id}
+          key={card._id}
+          id={card._id}
           name={card.name}
-          image={card.image}
+          image={card.link}
+          likes={card.likes}
         />
       ))}
     </div>

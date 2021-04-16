@@ -7,19 +7,25 @@ const handler = async (req, res) => {
     return;
   }
   const { name, email, password } = req.body;
-  if (
-    !email ||
-    !email.includes('@') ||
-    !name ||
-    name.trim() === '' ||
-    !password ||
-    password.trim().length < 7
-  ) {
-    return res.status(422).json({
-      message: 'data_incomplete, password_minimum_length_is_7',
-    });
-  }
+  //TODO: celebrate validation?
+  // if (
+  //   !email ||
+  //   !email.includes('@') ||
+  //   !name ||
+  //   name.trim() === '' ||
+  //   !password ||
+  //   password.trim().length < 7
+  // ) {
+  //   return res.status(422).json({
+  //     message: 'data_incomplete, password_minimum_length_is_7',
+  //   });
+  // }
+
   try {
+    const emailAlreadyExists = await User.findOne({ email });
+    if (emailAlreadyExists) {
+      return res.status(409).json({ message: 'Email already exists!' });
+    }
     const hashedPassword = await hashPassword(password);
     await User.create({
       name,

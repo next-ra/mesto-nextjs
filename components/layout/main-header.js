@@ -1,6 +1,10 @@
 import Link from 'next/link';
+import { useSession } from 'next-auth/client';
 import styles from './main-header.module.css';
 const MainHeader = (props) => {
+  const [session, loading] = useSession();
+  console.log(session, loading);
+
   return (
     <header className={styles.header}>
       <div>
@@ -12,17 +16,22 @@ const MainHeader = (props) => {
       </div>
       <nav className={styles.navigation}>
         <ul>
-          <li>
-            <Link href="/auth">Войти</Link>
-          </li>
+          {!session && !loading && (
+            <li>
+              <Link href="/auth">Войти</Link>
+            </li>
+          )}
 
-          <li>
-            <Link href="/profile">Профиль</Link>
-          </li>
-
-          <li>
-            <button>Выйти</button>
-          </li>
+          {session && (
+            <li>
+              <Link href="/profile">Профиль</Link>
+            </li>
+          )}
+          {session && (
+            <li>
+              <button>Выйти</button>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

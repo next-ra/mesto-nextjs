@@ -1,9 +1,12 @@
 import Link from 'next/link';
-import { useSession } from 'next-auth/client';
+import { useSession, signOut } from 'next-auth/client';
 import styles from './main-header.module.css';
 const MainHeader = (props) => {
   const [session, loading] = useSession();
-  console.log(session, loading);
+
+  const logoutHandler = () => {
+    signOut();
+  };
 
   return (
     <header className={styles.header}>
@@ -29,7 +32,7 @@ const MainHeader = (props) => {
           )}
           {session && (
             <li>
-              <button>Выйти</button>
+              <button onClick={logoutHandler}>Выйти</button>
             </li>
           )}
         </ul>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { createUser } from '../../controllers/users';
 import { useForm } from 'react-hook-form';
+import { signIn } from 'next-auth/client';
 
 import styles from './auth-form.module.css';
 import TextField from './text-field';
@@ -20,9 +21,14 @@ function AuthForm() {
 
   const submitHandler = async (data) => {
     const { name, email, password } = JSON.parse(JSON.stringify(data));
-
+    // console.log(name, email, password);
     if (isLogin) {
-      //log user in
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: email,
+        password: password,
+      });
+      console.log(result);
     } else {
       try {
         const result = await createUser(name, email, password);

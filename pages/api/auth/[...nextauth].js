@@ -10,13 +10,15 @@ export default NextAuth({
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
-        const user = await User.findOne({ email: credentials.email }).orFail(
-          new Error('No user found.'),
-        );
+        const user = await User.findOne({ email: credentials.email })
+          .select('+password')
+          .orFail(new Error('user not found'));
+
         const isValidPassword = await checkPassword(
           credentials.password,
           user.password,
         );
+
         if (!isValidPassword) {
           throw new Error('Неправильные почта или пароль');
         }

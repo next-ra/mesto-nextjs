@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { createUser } from '../../controllers/users';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/client';
+import { createUser } from '../../controllers/users';
+import TextField from './text-field';
 
 import styles from './auth-form.module.css';
-import TextField from './text-field';
 
 function AuthForm() {
   const {
@@ -14,6 +15,7 @@ function AuthForm() {
   } = useForm();
 
   const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -28,13 +30,16 @@ function AuthForm() {
         email: email,
         password: password,
       });
-      console.log(result);
+      if (!result.error) {
+        router.replace('/profile');
+      }
     } else {
       try {
         const result = await createUser(name, email, password);
         console.log(result);
       } catch (err) {
         console.log(err);
+        throw new Error(err.message || 'something went wrong');
       }
     }
   };

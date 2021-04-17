@@ -1,12 +1,16 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { createUser } from '../../controllers/users';
+import { useForm } from 'react-hook-form';
 
 import styles from './auth-form.module.css';
+import TextField from './text-field';
 
 function AuthForm() {
-  const inputNameRef = useRef();
-  const inputEmailRef = useRef();
-  const inputPasswordRef = useRef();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const [isLogin, setIsLogin] = useState(true);
 
@@ -14,23 +18,14 @@ function AuthForm() {
     setIsLogin((prevState) => !prevState);
   };
 
-  const submitHandler = async (ev) => {
-    ev.preventDefault();
+  const submitHandler = async (data) => {
+    const { name, email, password } = JSON.parse(JSON.stringify(data));
 
-    const enteredName = inputNameRef.current.value;
-    const enteredEmail = inputEmailRef.current.value;
-    const enteredPassword = inputPasswordRef.current.value;
-
-    // TODO: add validation here
     if (isLogin) {
       //log user in
     } else {
       try {
-        const result = await createUser(
-          enteredName,
-          enteredEmail,
-          enteredPassword,
-        );
+        const result = await createUser(name, email, password);
         console.log(result);
       } catch (err) {
         console.log(err);
@@ -41,26 +36,41 @@ function AuthForm() {
   return (
     <section className={styles.auth}>
       <h1>{isLogin ? 'Вход' : 'Регистрация'}</h1>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit(submitHandler)} noValidate>
         {isLogin ? null : (
-          <div className={styles.control}>
-            <label htmlFor="name">Имя</label>
-            <input type="text" id="name" required ref={inputNameRef} />
-          </div>
-        )}
-        <div className={styles.control}>
-          <label htmlFor="email">Почта</label>
-          <input type="email" id="email" required ref={inputEmailRef} />
-        </div>
-        <div className={styles.control}>
-          <label htmlFor="password">Пароль</label>
-          <input
-            type="password"
-            id="password"
-            required
-            ref={inputPasswordRef}
+          <TextField
+            label="Имя"
+            name="name"
+            placeholder="Имя"
+            register={register}
+            errors={errors}
+            rules={{ maxLength: 20, required: true, minLength: 3 }}
           />
-        </div>
+        )}
+
+        <TextField
+          label="Почта"
+          name="email"
+          placeholder="Почта"
+          register={register}
+          errors={errors}
+          rules={{
+            required: true,
+            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          }}
+        />
+
+        <TextField
+          label="Пароль"
+          name="password"
+          placeholder="Пароль"
+          register={register}
+          errors={errors}
+          rules={{
+            required: true,
+            minLength: 7,
+          }}
+        />
         <div className={styles.actions}>
           <button>{isLogin ? 'Войти' : 'Создать аккаунт'}</button>
           <button

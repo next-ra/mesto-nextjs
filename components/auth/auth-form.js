@@ -40,7 +40,7 @@ function AuthForm() {
         {isLogin ? null : (
           <TextField
             type="text"
-            label="Имя"
+            label="name"
             name="name"
             placeholder="Имя"
             register={register}
@@ -51,7 +51,7 @@ function AuthForm() {
 
         <TextField
           type="email"
-          label="Почта"
+          label="email"
           name="email"
           placeholder="Почта"
           register={register}
@@ -64,7 +64,7 @@ function AuthForm() {
 
         <TextField
           type="password"
-          label="Пароль"
+          label="password"
           name="password"
           placeholder="Пароль"
           register={register}

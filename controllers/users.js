@@ -1,5 +1,5 @@
 const createUser = async (name, email, password) => {
-  const response = await fetch(`/api/signup`, {
+  const response = await fetch(`/api/auth/signup`, {
     method: 'POST',
     body: JSON.stringify({ name, email, password }),
     headers: {

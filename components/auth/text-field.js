@@ -11,7 +11,7 @@ const TextField = ({
 }) => {
   return (
     <div className={styles.control}>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>{placeholder}</label>
       <input
         style={{ borderLeft: errors[label] ? '10px solid red' : '' }}
         autoComplete="off"

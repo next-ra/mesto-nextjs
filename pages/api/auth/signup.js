@@ -1,6 +1,6 @@
-import { hashPassword } from '../../helpers/auth';
-import connectDB from '../../middleware/mongodb';
-import User from '../../models/user';
+import { hashPassword } from '../../../helpers/auth';
+import connectDB from '../../../middleware/mongodb';
+import User from '../../../models/user';
 const handler = async (req, res) => {
   if (req.method !== 'POST') {
     res.status(422).send('req_method_not_supported');

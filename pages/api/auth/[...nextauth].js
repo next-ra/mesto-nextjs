@@ -1,0 +1,27 @@
+import NextAuth from 'next-auth';
+import Providers from 'next-auth/providers';
+import { checkPassword } from '../../../helpers/auth';
+import User from '../../../models/user';
+export default NextAuth({
+  session: {
+    jwt: true,
+    maxAge: 24 * 60 * 60,
+  },
+  providers: [
+    Providers.Credentials({
+      async authorize(credentials) {
+        const user = await User.findOne({ email: credentials.email }).orFail(
+          new Error('No user found.'),
+        );
+        const isValidPassword = await checkPassword(
+          credentials.password,
+          user.password,
+        );
+        if (!isValidPassword) {
+          throw new Error('Неправильные почта или пароль');
+        }
+        return { email: user.email };
+      },
+    }),
+  ],
+});

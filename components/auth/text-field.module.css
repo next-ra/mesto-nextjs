@@ -18,7 +18,7 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
   font-size: 18px;
-  text-align: start;
+  /* text-align: start; */
 }
 
 .control input {
@@ -26,9 +26,11 @@
   background-color: #f1e1fc;
   color: #38015c;
   border-radius: 4px;
-  border: 1px solid white;
   width: 100%;
   height: 36px;
   text-align: left;
   padding: 0.25rem;
+  outline: none;
+  border: none;
+  transition: border 0.3s;
 }

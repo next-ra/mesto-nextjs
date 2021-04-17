@@ -39,6 +39,7 @@ function AuthForm() {
       <form onSubmit={handleSubmit(submitHandler)} noValidate>
         {isLogin ? null : (
           <TextField
+            type="text"
             label="Имя"
             name="name"
             placeholder="Имя"
@@ -49,6 +50,7 @@ function AuthForm() {
         )}
 
         <TextField
+          type="email"
           label="Почта"
           name="email"
           placeholder="Почта"
@@ -61,6 +63,7 @@ function AuthForm() {
         />
 
         <TextField
+          type="password"
           label="Пароль"
           name="password"
           placeholder="Пароль"

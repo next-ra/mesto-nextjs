@@ -13,26 +13,30 @@ const TextField = ({
     <div className={styles.control}>
       <label htmlFor={name}>{label}</label>
       <input
+        style={{ borderLeft: errors[label] ? '10px solid red' : '' }}
+        autoComplete="off"
         placeholder={placeholder}
         type={type}
         {...register(label, { ...rules })}
       />
-      {errors[label] && errors[label].type === 'required' && (
-        <p className={styles.error}>{label} - обязательное поле.</p>
-      )}
-      {errors[label] && errors[label].type === 'maxLength' && (
-        <p className={styles.error}>
-          {label} - максимум {rules.maxLength} символа.
-        </p>
-      )}
-      {errors[label] && errors[label].type === 'minLength' && (
-        <p className={styles.error}>
-          {label} - минимум {rules.minLength} символа.
-        </p>
-      )}
-      {errors[label] && errors[label].type === 'pattern' && (
-        <p className={styles.error}>{label} - неправильный формат.</p>
-      )}
+
+      <p className={styles.error}>
+        {errors[label] &&
+          errors[label].type === 'required' &&
+          ` ${label} - обязательное поле`}
+
+        {errors[label] &&
+          errors[label].type === 'maxLength' &&
+          `${label} - максимум ${rules.maxLength} символа.`}
+
+        {errors[label] &&
+          errors[label].type === 'minLength' &&
+          `${label} - минимум ${rules.minLength} символа.`}
+
+        {errors[label] &&
+          errors[label].type === 'pattern' &&
+          `${label} - неправильный формат.`}
+      </p>
     </div>
   );
 };

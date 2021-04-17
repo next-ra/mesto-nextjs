@@ -1,18 +1,7 @@
 import { getSession } from 'next-auth/client';
-
-const Profile = () => {
-  return (
-    <div
-      style={{
-        color: 'white',
-        textAlign: 'center',
-        marginTop: '10px',
-        fontSize: '40px',
-      }}
-    >
-      Страница профиля пользователя
-    </div>
-  );
+import Profile from '../components/user/profile';
+const ProfilePage = () => {
+  return <Profile />;
 };
 
 export const getServerSideProps = async (context) => {
@@ -30,4 +19,4 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-export default Profile;
+export default ProfilePage;

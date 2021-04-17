@@ -1,16 +1,24 @@
 import Head from 'next/head';
+import { useState, useEffect } from 'react';
 import PlacesList from '../components/places/places-list';
 import Profile from '../components/user/profile';
-
+import { useSession, getSession } from 'next-auth/client';
 import { getAllCards } from '../helpers/api-util';
 const HomePage = ({ cards }) => {
+  const [session, setSession] = useState();
+  useEffect(() => {
+    getSession().then((session) => {
+      setSession(session);
+    });
+  }, []);
+
   return (
     <div>
       <Head>
         <title>NextJS Mesto</title>
         <link rel="icon" href="/favicon-mesto.ico" />
       </Head>
-      <Profile />
+      {session && <Profile />}
       <PlacesList cards={cards} />
     </div>
   );

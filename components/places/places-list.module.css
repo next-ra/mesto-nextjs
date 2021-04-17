@@ -4,5 +4,5 @@
   grid-gap: 18px 18px;
   justify-content: center;
   width: calc(100% - 400px);
-  margin: auto;
+  margin: 20px auto 0;
 }

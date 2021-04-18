@@ -1,7 +1,9 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import { checkPassword } from '../../../helpers/auth';
+import connectDB from '../../../middleware/mongodb';
 import User from '../../../models/user';
+
 export default NextAuth({
   session: {
     jwt: true,
@@ -10,6 +12,7 @@ export default NextAuth({
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
+        await connectDB();
         const user = await User.findOne({ email: credentials.email })
           .select('+password')
           .orFail(new Error('user not found'));

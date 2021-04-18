@@ -20,5 +20,10 @@ export async function getAllCards() {
       ...data[key],
     });
   }
-  return cards;
+  const filteredCards = cards.filter(
+    (card) => card.owner._id === '28a88090436fe2d20863f5bb',
+  );
+
+  console.log(filteredCards);
+  return filteredCards;
 }

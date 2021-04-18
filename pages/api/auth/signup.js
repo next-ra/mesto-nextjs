@@ -7,21 +7,9 @@ const handler = async (req, res) => {
     return;
   }
   const { name, email, password } = req.body;
-  //TODO: celebrate validation?
-  // if (
-  //   !email ||
-  //   !email.includes('@') ||
-  //   !name ||
-  //   name.trim() === '' ||
-  //   !password ||
-  //   password.trim().length < 7
-  // ) {
-  //   return res.status(422).json({
-  //     message: 'data_incomplete, password_minimum_length_is_7',
-  //   });
-  // }
 
   try {
+    await connectDB();
     const emailAlreadyExists = await User.findOne({ email });
     if (emailAlreadyExists) {
       return res.status(409).json({ message: 'Email already exists!' });
@@ -42,4 +30,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default connectDB(handler);
+export default handler;

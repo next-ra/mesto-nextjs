@@ -22,14 +22,15 @@ function AuthForm() {
   };
 
   const submitHandler = async (data) => {
-    const { name, email, password } = JSON.parse(JSON.stringify(data));
-
+    const { name, email, password } = data;
+    console.log(name, email, password);
     if (isLogin) {
       const result = await signIn('credentials', {
         redirect: false,
         email: email,
         password: password,
       });
+      console.log(result);
       if (!result.error) {
         router.replace('/profile');
       }
@@ -38,8 +39,8 @@ function AuthForm() {
         const result = await createUser(name, email, password);
         console.log(result);
       } catch (err) {
-        console.log(err);
-        throw new Error(err.message || 'something went wrong');
+        console.log(err.message);
+        // throw new Error(err.message || 'something went wrong');
       }
     }
   };

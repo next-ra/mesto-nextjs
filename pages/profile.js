@@ -1,7 +1,14 @@
 import { getSession } from 'next-auth/client';
 import Profile from '../components/user/profile';
-const ProfilePage = () => {
-  return <Profile />;
+import Popup from '../components/popup/popup';
+import { Fragment } from 'react';
+const ProfilePage = ({ showPopupHandler, showPopup }) => {
+  return (
+    <Fragment>
+      <Profile showPopupHandler={showPopupHandler} showPopup={showPopup} />;
+      {showPopup && <Popup />}
+    </Fragment>
+  );
 };
 
 export const getServerSideProps = async (context) => {

@@ -1,13 +1,13 @@
 import styles from './user-info.module.css';
 
-const UserInfo = () => {
+const UserInfo = ({ showPopupHandler }) => {
   const DUMMY_DATA = {
     photo:
       'http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcSDDd3RRQogCePRa-ZQsBm51ym_22boFxeRv0FGsi-SPYsehRDDojgB4gYFqSns',
     name: 'Zacharias Manuel de la Rocha',
     job: 'American musician and activist',
   };
-
+  console.log(showPopupHandler, 'userInfo');
   return (
     <div className={styles.info}>
       <div
@@ -21,7 +21,9 @@ const UserInfo = () => {
         <p className={styles.job}>{DUMMY_DATA.job}</p>
         <button className={styles.button_edit}>Edit</button>
       </div>
-      <button className={styles.button_place}>+</button>
+      <button onClick={showPopupHandler} className={styles.button_place}>
+        +
+      </button>
     </div>
   );
 };

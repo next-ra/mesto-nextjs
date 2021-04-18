@@ -5,13 +5,19 @@ import Profile from '../components/user/profile';
 import { getSession } from 'next-auth/client';
 import { getAllCards } from '../helpers/api-util';
 import Popup from '../components/popup/popup';
-const HomePage = ({ cards }) => {
+const HomePage = (props) => {
+  const { cards, showPopup, showPopupHandler } = props;
   const [session, setSession] = useState();
+
   useEffect(() => {
     getSession().then((session) => {
       setSession(session);
     });
   }, []);
+
+  const togglePopupHandler = () => {
+    setShowPopup(true);
+  };
 
   return (
     <div>
@@ -19,9 +25,9 @@ const HomePage = ({ cards }) => {
         <title>NextJS Mesto</title>
         <link rel="icon" href="/favicon-mesto.ico" />
       </Head>
-      {session && <Profile />}
+      {session && <Profile showPopupHandler={showPopupHandler} />}
       <PlacesList cards={cards} />
-      <Popup />
+      {showPopup && <Popup />}
     </div>
   );
 };

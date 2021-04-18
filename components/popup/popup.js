@@ -12,8 +12,8 @@ const Popup = () => {
             name="name"
             className={styles.input}
             placeholder="Название"
-            minlength="2"
-            maxlength="30"
+            minLength="2"
+            maxLength="30"
             required
           />
           <p className={styles.error} id="name"></p>

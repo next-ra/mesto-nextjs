@@ -4,6 +4,7 @@ import PlacesList from '../components/places/places-list';
 import Profile from '../components/user/profile';
 import { getSession } from 'next-auth/client';
 import { getAllCards } from '../helpers/api-util';
+import Popup from '../components/popup/popup';
 const HomePage = ({ cards }) => {
   const [session, setSession] = useState();
   useEffect(() => {
@@ -20,6 +21,7 @@ const HomePage = ({ cards }) => {
       </Head>
       {session && <Profile />}
       <PlacesList cards={cards} />
+      <Popup />
     </div>
   );
 };

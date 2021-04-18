@@ -1,21 +1,22 @@
-import { useState } from 'react';
 import Layout from '../components/layout/layout';
+import { Provider } from 'next-auth/client';
 import '../styles/globals.css';
+import usePopupVisible from '../hooks/use-popup-visble';
 
 function MyApp({ Component, pageProps }) {
-  const [showPopup, setShowPopup] = useState(false);
-  const showPopupHandler = () => {
-    setShowPopup((prevState) => !prevState);
-  };
+  const { ref, showPopup, toggleHandler } = usePopupVisible(false);
 
   return (
-    <Layout>
-      <Component
-        showPopupHandler={showPopupHandler}
-        showPopup={showPopup}
-        {...pageProps}
-      />
-    </Layout>
+    <Provider session={pageProps.session}>
+      <Layout>
+        <Component
+          clickOutside={ref}
+          showPopupHandler={toggleHandler}
+          showPopup={showPopup}
+          {...pageProps}
+        />
+      </Layout>
+    </Provider>
   );
 }
 

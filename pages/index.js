@@ -2,22 +2,13 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import PlacesList from '../components/places/places-list';
 import Profile from '../components/user/profile';
-import { getSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import { getAllCards } from '../helpers/api-util';
 import Popup from '../components/popup/popup';
 const HomePage = (props) => {
-  const { cards, showPopup, showPopupHandler } = props;
-  const [session, setSession] = useState();
+  const { cards, showPopup, showPopupHandler, clickOutside } = props;
 
-  useEffect(() => {
-    getSession().then((session) => {
-      setSession(session);
-    });
-  }, []);
-
-  const togglePopupHandler = () => {
-    setShowPopup(true);
-  };
+  const [session, loading] = useSession();
 
   return (
     <div>
@@ -27,7 +18,12 @@ const HomePage = (props) => {
       </Head>
       {session && <Profile showPopupHandler={showPopupHandler} />}
       <PlacesList cards={cards} />
-      {showPopup && <Popup />}
+      {showPopup && (
+        <Popup
+          clickOutside={clickOutside}
+          showPopupHandler={showPopupHandler}
+        />
+      )}
     </div>
   );
 };

@@ -1,12 +1,18 @@
 import { getSession } from 'next-auth/client';
+import { Fragment } from 'react';
 import Profile from '../components/user/profile';
 import Popup from '../components/popup/popup';
-import { Fragment } from 'react';
-const ProfilePage = ({ showPopupHandler, showPopup }) => {
+
+const ProfilePage = ({ showPopupHandler, showPopup, clickOutside }) => {
   return (
     <Fragment>
-      <Profile showPopupHandler={showPopupHandler} showPopup={showPopup} />;
-      {showPopup && <Popup />}
+      <Profile showPopupHandler={showPopupHandler} />;
+      {showPopup && (
+        <Popup
+          clickOutside={clickOutside}
+          showPopupHandler={showPopupHandler}
+        />
+      )}
     </Fragment>
   );
 };

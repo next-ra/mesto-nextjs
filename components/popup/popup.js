@@ -1,10 +1,15 @@
 import styles from './popup.module.css';
 
-const Popup = () => {
+const Popup = ({ clickOutside, showPopupHandler }) => {
   return (
     <div className={styles.popup} id="popup-place">
-      <div className={styles.content}>
-        <img src="/close.svg" alt="" className={styles.close} />
+      <div className={styles.content} ref={clickOutside}>
+        <img
+          src="/close.svg"
+          alt=""
+          className={styles.close}
+          onClick={showPopupHandler}
+        />
         <h3 className={styles.title}>Новое место</h3>
         <form className={styles.form} name="new" noValidate>
           <input

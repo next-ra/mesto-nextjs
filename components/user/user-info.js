@@ -1,5 +1,5 @@
 import styles from './user-info.module.css';
-
+import useComponentVisible from '../../hooks/use-popup-visble';
 const UserInfo = ({ showPopupHandler }) => {
   const DUMMY_DATA = {
     photo:
@@ -7,7 +7,7 @@ const UserInfo = ({ showPopupHandler }) => {
     name: 'Zacharias Manuel de la Rocha',
     job: 'American musician and activist',
   };
-  console.log(showPopupHandler, 'userInfo');
+
   return (
     <div className={styles.info}>
       <div

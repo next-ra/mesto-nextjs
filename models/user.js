@@ -14,6 +14,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     validate: (v) => isEmail(v),
+    message: 'Указана невалидная почта',
     unique: true,
   },
   password: {
@@ -21,6 +22,21 @@ const userSchema = new Schema({
     required: true,
     minlength: 8,
     select: false,
+  },
+  about: {
+    type: String,
+    minlength: 2,
+    maxlength: 30,
+    default: 'Пират, капитан черной жемчужины',
+  },
+  avatar: {
+    type: String,
+    validate: {
+      validator: (link) => validator.isURL(link),
+      message: 'неверная ссылка на аватар',
+    },
+    default:
+      'https://i.pinimg.com/564x/97/2e/1d/972e1de68b28f5d9ad5b9edefb429800.jpg',
   },
 });
 

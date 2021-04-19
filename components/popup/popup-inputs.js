@@ -22,19 +22,19 @@ const TextField = ({
       <p className={styles.error}>
         {errors[label] &&
           errors[label].type === 'required' &&
-          ` ${label} - обязательное поле`}
+          ` ${placeholder} - обязательное поле`}
 
         {errors[label] &&
           errors[label].type === 'maxLength' &&
-          `${label} - максимум ${rules.maxLength} символа.`}
+          `${placeholder} - максимум ${rules.maxLength} символа.`}
 
         {errors[label] &&
           errors[label].type === 'minLength' &&
-          `${label} - минимум ${rules.minLength} символа.`}
+          `${placeholder} - минимум ${rules.minLength} символа.`}
 
         {errors[label] &&
           errors[label].type === 'pattern' &&
-          `${label} - неправильный формат.`}
+          `${placeholder} - неправильный формат.`}
       </p>
     </Fragment>
   );

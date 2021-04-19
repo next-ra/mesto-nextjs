@@ -1,6 +1,7 @@
 import styles from './popup.module.css';
 import { createCard } from '../../controllers/cards';
 import { useForm } from 'react-hook-form';
+import { getSession } from 'next-auth/client';
 import TextField from './popup-inputs';
 const Popup = ({ clickOutside, showPopupHandler }) => {
   const {
@@ -10,8 +11,10 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
   } = useForm();
 
   const submitHandler = async (ev) => {
-    console.log('submitted');
+    const session = await getSession();
+    console.log('submitted', session);
     showPopupHandler();
+    createCard();
   };
 
   return (
@@ -47,29 +50,11 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
             register={register}
             errors={errors}
             rules={{
-              required: true,
+              required: false,
               pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
             }}
           />
 
-          {/* <input
-            type="text"
-            name="name"
-            className={styles.input}
-            placeholder="Название"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <p className={styles.error} id="name"></p>
-          <input
-            type="url"
-            name="link"
-            className={styles.input}
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <p className={styles.error} id="link"></p> */}
           <button
             type="submit"
             className={`${styles.button} ${styles[`button-edit`]}`}

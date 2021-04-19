@@ -4,7 +4,10 @@ import Card from '../../../models/card';
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     try {
+      await connectDB();
       const { name, link } = req.body;
+
+      res.status(201).json({ message: 'card created' });
     } catch (err) {
       return res
         .status(err.status || 500)
@@ -12,3 +15,4 @@ const handler = async (req, res) => {
     }
   }
 };
+export default handler;

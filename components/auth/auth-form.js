@@ -9,6 +9,7 @@ import styles from './auth-form.module.css';
 
 function AuthForm() {
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -18,6 +19,7 @@ function AuthForm() {
   const router = useRouter();
 
   const switchAuthModeHandler = () => {
+    reset();
     setIsLogin((prevState) => !prevState);
   };
 
@@ -30,14 +32,18 @@ function AuthForm() {
         email: email,
         password: password,
       });
+
       console.log(result);
       if (!result.error) {
+        console.log(result);
         router.replace('/profile');
       }
     } else {
       try {
         const result = await createUser(name, email, password);
         console.log(result);
+        switchAuthModeHandler();
+        reset();
       } catch (err) {
         console.log(err.message);
         // throw new Error(err.message || 'something went wrong');

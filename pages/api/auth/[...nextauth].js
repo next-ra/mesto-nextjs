@@ -9,6 +9,18 @@ export default NextAuth({
     jwt: true,
     maxAge: 24 * 60 * 60,
   },
+  callbacks: {
+    async jwt(token, profile) {
+      profile && (token.userId = profile.userId);
+
+      return token;
+    },
+    session: async (session, user) => {
+      session.user.userId = user.userId;
+
+      return session;
+    },
+  },
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
@@ -25,7 +37,13 @@ export default NextAuth({
         if (!isValidPassword) {
           throw new Error('Неправильные почта или пароль');
         }
-        return { email: user.email };
+
+        return {
+          name: user.name,
+          email: user.email,
+          image: user.avatar,
+          userId: user._id,
+        };
       },
     }),
   ],

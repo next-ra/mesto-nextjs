@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const { isEmail } = require('validator');
+const { isEmail, isURL } = require('validator');
 
 const Schema = mongoose.Schema;
 
@@ -26,13 +26,13 @@ const userSchema = new Schema({
   about: {
     type: String,
     minlength: 2,
-    maxlength: 30,
+    maxlength: 240,
     default: 'Пират, капитан черной жемчужины',
   },
   avatar: {
     type: String,
     validate: {
-      validator: (link) => validator.isURL(link),
+      validator: (link) => isURL(link),
       message: 'неверная ссылка на аватар',
     },
     default:

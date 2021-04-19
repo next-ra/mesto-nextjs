@@ -13,4 +13,13 @@ const createUser = async (name, email, password) => {
   return data;
 };
 
-export { createUser };
+const getUserInformation = async () => {
+  const response = await fetch(`api/users/me`);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'something_went_wrong');
+  }
+  return data;
+};
+
+export { createUser, getUserInformation };

@@ -3,10 +3,17 @@ import { Fragment } from 'react';
 import Profile from '../components/user/profile';
 import Popup from '../components/popup/popup';
 
-const ProfilePage = ({ showPopupHandler, showPopup, clickOutside }) => {
+const ProfilePage = ({
+  showPopupHandler,
+  showPopup,
+  clickOutside,
+  session,
+}) => {
+  const { showPopupHandler, showPopup, clickOutside } = props;
+
   return (
     <Fragment>
-      <Profile showPopupHandler={showPopupHandler} />;
+      <Profile userData={session.user} showPopupHandler={showPopupHandler} />;
       {showPopup && (
         <Popup
           clickOutside={clickOutside}
@@ -29,7 +36,9 @@ export const getServerSideProps = async (context) => {
     };
   }
   return {
-    props: { session },
+    props: {
+      session,
+    },
   };
 };
 

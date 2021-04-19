@@ -9,6 +9,7 @@ const HomePage = (props) => {
   const { cards, showPopup, showPopupHandler, clickOutside } = props;
 
   const [session, loading] = useSession();
+  console.log(session);
 
   return (
     <div>
@@ -16,7 +17,9 @@ const HomePage = (props) => {
         <title>NextJS Mesto</title>
         <link rel="icon" href="/favicon-mesto.ico" />
       </Head>
-      {session && <Profile showPopupHandler={showPopupHandler} />}
+      {session && (
+        <Profile userData={session.user} showPopupHandler={showPopupHandler} />
+      )}
       <PlacesList cards={cards} />
       {showPopup && (
         <Popup

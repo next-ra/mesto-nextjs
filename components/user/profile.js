@@ -2,10 +2,10 @@ import UserInfo from './user-info';
 
 import styles from './profile.module.css';
 
-const Profile = ({ showPopupHandler }) => {
+const Profile = ({ showPopupHandler, userData }) => {
   return (
     <div className={styles.profile}>
-      <UserInfo showPopupHandler={showPopupHandler} />
+      <UserInfo userData={userData} showPopupHandler={showPopupHandler} />
     </div>
   );
 };

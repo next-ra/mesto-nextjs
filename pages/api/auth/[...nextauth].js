@@ -12,12 +12,12 @@ export default NextAuth({
   callbacks: {
     async jwt(token, profile) {
       profile && (token.userId = profile.userId);
-
+      profile && (token.about = profile.about);
       return token;
     },
     session: async (session, user) => {
       session.user.userId = user.userId;
-
+      session.user.about = user.about;
       return session;
     },
   },
@@ -43,6 +43,7 @@ export default NextAuth({
           email: user.email,
           image: user.avatar,
           userId: user._id,
+          about: user.about,
         };
       },
     }),

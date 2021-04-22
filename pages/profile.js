@@ -1,4 +1,5 @@
 import { getSession } from 'next-auth/client';
+
 import { Fragment } from 'react';
 import Profile from '../components/user/profile';
 import Popup from '../components/popup/popup';
@@ -9,8 +10,6 @@ const ProfilePage = ({
   clickOutside,
   session,
 }) => {
-  const { showPopupHandler, showPopup, clickOutside } = props;
-
   return (
     <Fragment>
       <Profile userData={session.user} showPopupHandler={showPopupHandler} />;

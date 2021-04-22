@@ -25,7 +25,7 @@ function AuthForm() {
 
   const submitHandler = async (data) => {
     const { name, email, password } = data;
-    console.log(name, email, password);
+
     if (isLogin) {
       const result = await signIn('credentials', {
         redirect: false,

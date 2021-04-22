@@ -13,7 +13,6 @@ export default function usePopupVisible(initialIsVisible) {
   const clickOutsideHandler = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setShowPopup(false);
-      console.log('click outside');
     }
   };
 

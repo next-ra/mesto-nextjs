@@ -4,10 +4,13 @@ import Card from '../../../models/card';
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     try {
+      console.log(req.body);
       await connectDB();
-      const { name, link } = req.body;
-
-      res.status(201).json({ message: 'card created' });
+      const { name, link, owner } = req.body;
+      Card.create({ name, link, owner });
+      return res.status(201).json({
+        message: 'card created successfully!',
+      });
     } catch (err) {
       return res
         .status(err.status || 500)

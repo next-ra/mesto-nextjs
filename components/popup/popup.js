@@ -5,16 +5,20 @@ import { getSession } from 'next-auth/client';
 import TextField from './popup-inputs';
 const Popup = ({ clickOutside, showPopupHandler }) => {
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const submitHandler = async (ev) => {
+  const submitHandler = async (data) => {
     const session = await getSession();
-    console.log('submitted', session);
+    const owner = session.user.userId;
+    const { name, link } = data;
+
+    const result = await createCard(name, link, owner);
+    console.log(result);
     showPopupHandler();
-    createCard();
   };
 
   return (
@@ -50,7 +54,7 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
             register={register}
             errors={errors}
             rules={{
-              required: false,
+              required: true,
               pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
             }}
           />

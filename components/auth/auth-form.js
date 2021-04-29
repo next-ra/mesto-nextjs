@@ -63,7 +63,7 @@ function AuthForm() {
             placeholder="Имя"
             register={register}
             errors={errors}
-            rules={{ maxLength: 20, required: true, minLength: 3 }}
+            rules={{ maxLength: 30, required: true, minLength: 3 }}
           />
         )}
 

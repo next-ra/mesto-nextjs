@@ -1,9 +1,15 @@
+import React from 'react';
 import styles from './popup.module.css';
 import { createCard } from '../../controllers/cards';
 import { useForm } from 'react-hook-form';
 import { getSession } from 'next-auth/client';
 import TextField from './popup-inputs';
+import { useDispatch } from 'react-redux';
+import { SET_CARD } from '../../redux/actions/types';
+
 const Popup = ({ clickOutside, showPopupHandler }) => {
+  const dispatch = useDispatch();
+
   const {
     reset,
     register,
@@ -19,6 +25,10 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
     const result = await createCard(name, link, owner);
     console.log(result);
     showPopupHandler();
+    dispatch({
+      type: SET_CARD,
+      card: result.data,
+    });
   };
 
   return (
@@ -44,7 +54,7 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
             placeholder="Название"
             register={register}
             errors={errors}
-            rules={{ maxLength: 20, required: true, minLength: 3 }}
+            rules={{ maxLength: 30, required: true, minLength: 3 }}
           />
           <TextField
             type="url"

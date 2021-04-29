@@ -1,12 +1,17 @@
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
-import PlacesList from '../components/places/places-list';
-import Profile from '../components/user/profile';
 import { useSession } from 'next-auth/client';
-import { getAllCards } from '../controllers/cards';
+import Head from 'next/head';
+import { useSelector, useDispatch } from 'react-redux';
+import PlacesList from '../components/places/places-list';
 import Popup from '../components/popup/popup';
+import Profile from '../components/user/profile';
+import { getAllCards } from '../controllers/cards';
+import { SET_CARDS } from '../redux/actions/types';
+import { initializeStore } from '../redux/store';
+
 const HomePage = (props) => {
-  const { cards, showPopup, showPopupHandler, clickOutside } = props;
+  const cards = useSelector((state) => state.cardsReducer.cards);
+
+  const { showPopup, showPopupHandler, clickOutside } = props;
 
   const [session, loading] = useSession();
 
@@ -30,13 +35,25 @@ const HomePage = (props) => {
   );
 };
 
-export const getStaticProps = async () => {
+// export const getStaticProps = async () => {
+//   const cards = await getAllCards();
+//   return {
+//     props: { cards },
+//     revalidate: 1800,
+//   };
+// };
+
+export const getServerSideProps = async () => {
   const cards = await getAllCards();
 
-  return {
-    props: { cards },
-    revalidate: 1800,
-  };
+  const reduxStore = await initializeStore();
+  const { dispatch } = reduxStore;
+
+  dispatch({
+    type: SET_CARDS,
+    cards,
+  });
+  return { props: { initialReduxState: reduxStore.getState() } };
 };
 
 export default HomePage;

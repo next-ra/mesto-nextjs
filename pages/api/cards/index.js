@@ -7,9 +7,10 @@ const handler = async (req, res) => {
       console.log(req.body);
       await connectDB();
       const { name, link, owner } = req.body;
-      Card.create({ name, link, owner });
+      const card = await Card.create({ name, link, owner });
       return res.status(201).json({
         message: 'card created successfully!',
+        data: card,
       });
     } catch (err) {
       return res

@@ -5,7 +5,11 @@ import { useForm } from 'react-hook-form';
 import { getSession } from 'next-auth/client';
 import TextField from './popup-inputs';
 import { useDispatch } from 'react-redux';
-import { SET_CARD } from '../../redux/actions/types';
+import {
+  ADD_USER_CARD,
+  SET_CARD,
+  SET_USER_CARDS,
+} from '../../redux/actions/types';
 
 const Popup = ({ clickOutside, showPopupHandler }) => {
   const dispatch = useDispatch();
@@ -27,6 +31,10 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
     showPopupHandler();
     dispatch({
       type: SET_CARD,
+      card: result.data,
+    });
+    dispatch({
+      type: ADD_USER_CARD,
       card: result.data,
     });
   };

@@ -12,15 +12,15 @@ const PlaceCard = (props) => {
   const cardIdRef = useRef();
 
   const { image, name, id, likes, owner } = props;
-  console.log('owner: ', owner, 'user: ', userId);
+
   const isOwner = (owner, userId) => {
     if (owner === userId) return true;
     else return false;
   };
 
   const deleteHandler = async () => {
-    await deleteCard(cardId);
     const cardId = await cardIdRef.current.id;
+    await deleteCard(cardId);
     dispatch({
       type: DELETE_CARD,
       cardId,

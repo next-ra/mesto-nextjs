@@ -1,6 +1,6 @@
 import { DELETE_CARD, SET_CARD, SET_CARDS } from '../actions/types';
 
-const cardsReducer = (state = {}, action) => {
+const cardsReducer = (state = { cards: [] }, action) => {
   switch (action.type) {
     case SET_CARDS:
       return {

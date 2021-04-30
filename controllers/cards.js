@@ -41,15 +41,30 @@ const deleteCard = async (cardId) => {
   } else return data;
 };
 
-const getUserCards = async (ownerId) => {
-  try {
-    const cards = await Card.find({ owner: ownerId }).orFail(
-      new NotFound(articleRes.notFound),
-    );
-    res.status(200).send({ data: cards });
-  } catch (err) {
-    console.log(err);
+const getUserCards = async () => {
+  const response = await fetch(`/api/cards`, {
+    method: 'GET',
+
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'something_went_wrong');
   }
+  return data;
+  // try {
+  //   await connectDB();
+  //   const data = await Card.find({ owner: ownerId }).orFail(
+  //     new NotFound(articleRes.notFound),
+  //   );
+  //   const cards = JSON.parse(JSON.stringify(data));
+  //   res.status(200).send({ data: cards });
+  //   return cards;
+  // } catch (err) {
+  //   console.log(err);
+  // }
 };
 
 export { createCard, getAllCards, deleteCard, getUserCards };

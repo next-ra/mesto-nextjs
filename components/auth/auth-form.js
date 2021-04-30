@@ -59,7 +59,7 @@ function AuthForm() {
   };
 
   return (
-    <section className={`${styles.auth} hello`}>
+    <section className={styles.auth}>
       <h1>{isLogin ? 'Вход' : 'Регистрация'}</h1>
       <form onSubmit={handleSubmit(submitHandler)} noValidate>
         {isLogin ? null : (

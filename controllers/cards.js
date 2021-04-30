@@ -41,4 +41,15 @@ const deleteCard = async (cardId) => {
   } else return data;
 };
 
-export { createCard, getAllCards, deleteCard };
+const getUserCards = async (ownerId) => {
+  try {
+    const cards = await Card.find({ owner: ownerId }).orFail(
+      new NotFound(articleRes.notFound),
+    );
+    res.status(200).send({ data: cards });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { createCard, getAllCards, deleteCard, getUserCards };

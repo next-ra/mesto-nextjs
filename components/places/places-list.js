@@ -11,6 +11,7 @@ const PlacesList = ({ cards }) => {
           name={card.name}
           image={card.link}
           likes={card.likes}
+          owner={card.owner}
         />
       ))}
     </div>

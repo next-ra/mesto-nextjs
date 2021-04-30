@@ -1,18 +1,26 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './place-card.module.css';
 
 import { deleteCard } from '../../controllers/cards';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DELETE_CARD } from '../../redux/actions/types';
 
 const PlaceCard = (props) => {
   const dispatch = useDispatch();
-  const { image, name, id, likes } = props;
+  const userId = useSelector((state) => state.userReducer.user.userId);
 
   const cardIdRef = useRef();
+
+  const { image, name, id, likes, owner } = props;
+  console.log('owner: ', owner, 'user: ', userId);
+  const isOwner = (owner, userId) => {
+    if (owner === userId) return true;
+    else return false;
+  };
+
   const deleteHandler = async () => {
-    const cardId = await cardIdRef.current.id;
     await deleteCard(cardId);
+    const cardId = await cardIdRef.current.id;
     dispatch({
       type: DELETE_CARD,
       cardId,
@@ -26,7 +34,9 @@ const PlaceCard = (props) => {
           backgroundImage: `url(${image})`,
         }}
       >
-        <button onClick={deleteHandler} className={styles['delete-icon']} />
+        {isOwner(owner, userId) && (
+          <button onClick={deleteHandler} className={styles['delete-icon']} />
+        )}
       </div>
       <div className={styles.description}>
         <h3 className={styles.name}>{name}</h3>

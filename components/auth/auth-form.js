@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { signIn } from 'next-auth/client';
+import { getSession, signIn } from 'next-auth/client';
 import { createUser } from '../../controllers/users';
 import TextField from './text-field';
 
 import styles from './auth-form.module.css';
+import { useDispatch } from 'react-redux';
+import { SET_USER } from '../../redux/actions/types';
 
 function AuthForm() {
   const {
@@ -14,7 +16,7 @@ function AuthForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
 
@@ -36,6 +38,11 @@ function AuthForm() {
       console.log(result);
       if (!result.error) {
         console.log(result);
+        const session = await getSession();
+        dispatch({
+          type: SET_USER,
+          user: session.user,
+        });
         router.replace('/profile');
       }
     } else {

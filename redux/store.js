@@ -10,11 +10,7 @@ const composeEnhancers =
 
 let store;
 
-const initialState = {
-  // cards: {},
-};
-
-function initStore(preloadedState = initialState) {
+function initStore(preloadedState) {
   return createStore(
     rootReducer,
     preloadedState,

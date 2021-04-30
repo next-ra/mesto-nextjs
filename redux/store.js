@@ -11,25 +11,8 @@ const composeEnhancers =
 let store;
 
 const initialState = {
-  cards: {},
+  // cards: {},
 };
-
-// const cardsReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case 'SET_CARDS':
-//       return {
-//         ...state,
-//         cards: action.cards,
-//       };
-//     case 'SET_CARD':
-//       return {
-//         ...state,
-//         cards: [...state.cards, action.card],
-//       };
-//     default:
-//       return state;
-//   }
-// };
 
 function initStore(preloadedState = initialState) {
   return createStore(

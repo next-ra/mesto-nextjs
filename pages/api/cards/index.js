@@ -18,5 +18,21 @@ const handler = async (req, res) => {
         .json({ message: err.message || 'something_went_wrong' });
     }
   }
+  if (req.method === 'DELETE') {
+    try {
+      console.log(req.body);
+      await connectDB();
+      const { cardId, owner } = req.body;
+      const card = await Card.findByIdAndRemove(cardId);
+      return res.status(201).json({
+        message: 'Success delete card',
+        data: card,
+      });
+    } catch (err) {
+      return res
+        .status(err.status || 500)
+        .json({ message: err.message || 'something_went_wrong' });
+    }
+  }
 };
 export default handler;

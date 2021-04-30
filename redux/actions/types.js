@@ -1,4 +1,4 @@
 const SET_CARD = 'SET_CARD';
 const SET_CARDS = 'SET_CARDS';
-
-export { SET_CARD, SET_CARDS };
+const DELETE_CARD = 'DELETE_CARD';
+export { SET_CARD, SET_CARDS, DELETE_CARD };

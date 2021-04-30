@@ -27,4 +27,18 @@ const getAllCards = async () => {
   return cards;
 };
 
-export { createCard, getAllCards };
+const deleteCard = async (cardId) => {
+  const response = await fetch(`/api/cards`, {
+    method: 'DELETE',
+    body: JSON.stringify({ cardId }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'something_went_wrong');
+  } else return data;
+};
+
+export { createCard, getAllCards, deleteCard };

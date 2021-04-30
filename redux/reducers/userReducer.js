@@ -1,4 +1,9 @@
-import { ADD_USER_CARD, SET_USER, SET_USER_CARDS } from '../actions/types';
+import {
+  ADD_USER_CARD,
+  DELETE_USER_CARD,
+  SET_USER,
+  SET_USER_CARDS,
+} from '../actions/types';
 
 const userReducer = (state = { user: 'noUser', cards: [] }, action) => {
   switch (action.type) {
@@ -16,6 +21,11 @@ const userReducer = (state = { user: 'noUser', cards: [] }, action) => {
       return {
         ...state,
         cards: [...state.cards, action.card],
+      };
+    case DELETE_USER_CARD:
+      return {
+        ...state,
+        cards: state.cards.filter((card) => card._id !== action.cardId),
       };
     default:
       return { ...state };

@@ -3,7 +3,7 @@ import styles from './place-card.module.css';
 
 import { deleteCard } from '../../controllers/cards';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_CARD } from '../../redux/actions/types';
+import { DELETE_CARD, DELETE_USER_CARD } from '../../redux/actions/types';
 
 const PlaceCard = (props) => {
   const dispatch = useDispatch();
@@ -23,6 +23,10 @@ const PlaceCard = (props) => {
     await deleteCard(cardId);
     dispatch({
       type: DELETE_CARD,
+      cardId,
+    });
+    dispatch({
+      type: DELETE_USER_CARD,
       cardId,
     });
   };

@@ -1,10 +1,5 @@
-import UserInfo from './user-info';
-
 import styles from './profile.module.css';
-import PlacesList from '../places/places-list';
-import { getAllCards, getUserCards } from '../../controllers/cards';
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import UserInfo from './user-info';
 
 const Profile = ({ showPopupHandler, userData }) => {
   return (

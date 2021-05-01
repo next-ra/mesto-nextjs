@@ -1,0 +1,30 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  z-index: 10;
+}
+.close {
+  width: 26px;
+  position: absolute;
+  top: -26px;
+  right: -26px;
+  cursor: pointer;
+}
+
+.box {
+  position: relative;
+}
+
+.image {
+  max-width: 80vw;
+  max-height: 80vh;
+  border-radius: 10px;
+}

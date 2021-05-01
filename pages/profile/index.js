@@ -1,11 +1,11 @@
 import { getSession } from 'next-auth/client';
-import { Fragment, useEffect, useState } from 'react';
-import Profile from '../../components/user/profile';
-import Popup from '../../components/popup/popup';
-import { initializeStore } from '../../redux/store';
-import { SET_USER, SET_USER_CARDS } from '../../redux/actions/types';
+import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PlacesList from '../../components/places/places-list';
+import Popup from '../../components/popup/popup';
+import Profile from '../../components/user/profile';
+import { SET_USER, SET_USER_CARDS } from '../../redux/actions/types';
+import { initializeStore } from '../../redux/store';
 
 const ProfilePage = ({
   showPopupHandler,
@@ -17,7 +17,6 @@ const ProfilePage = ({
   const user = useSelector((state) => state.userReducer.user);
   const userId = useSelector((state) => state.userReducer.user.userId);
   const userCards = useSelector((state) => state.userReducer.cards);
-  // console.log(userCards);
   useEffect(() => {
     fetch('/api/cards/')
       .then((res) => res.json())

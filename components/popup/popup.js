@@ -1,15 +1,11 @@
-import React from 'react';
-import styles from './popup.module.css';
-import { createCard } from '../../controllers/cards';
-import { useForm } from 'react-hook-form';
 import { getSession } from 'next-auth/client';
-import TextField from './popup-inputs';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import {
-  ADD_USER_CARD,
-  SET_CARD,
-  SET_USER_CARDS,
-} from '../../redux/actions/types';
+import { createCard } from '../../controllers/cards';
+import { ADD_USER_CARD, SET_CARD } from '../../redux/actions/types';
+import TextField from './popup-inputs';
+import styles from './popup.module.css';
 
 const Popup = ({ clickOutside, showPopupHandler }) => {
   const dispatch = useDispatch();
@@ -44,7 +40,7 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
       <div className={styles.content} ref={clickOutside}>
         <img
           src="/close.svg"
-          alt=""
+          alt="close button"
           className={styles.close}
           onClick={showPopupHandler}
         />

@@ -1,10 +1,10 @@
 import { getSession } from 'next-auth/client';
-import { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import PlacesList from '../../components/places/places-list';
 import Popup from '../../components/popup/popup';
 import Profile from '../../components/user/profile';
-import { SET_USER, SET_USER_CARDS } from '../../redux/actions/types';
+import { SET_CARDS, SET_USER } from '../../redux/actions/types';
 import { initializeStore } from '../../redux/store';
 
 const ProfilePage = ({
@@ -13,24 +13,13 @@ const ProfilePage = ({
   clickOutside,
   session,
 }) => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
-  const userId = useSelector((state) => state.userReducer.user.userId);
-  const userCards = useSelector((state) => state.userReducer.cards);
-  useEffect(() => {
-    fetch('/api/cards/')
-      .then((res) => res.json())
-      .then((data) => {
-        const userCards = data.data.filter((card) => {
-          return card.owner === userId;
-        });
-        dispatch({ type: SET_USER_CARDS, cards: userCards });
-      });
-  }, []);
+  const cards = useSelector((state) => state.cardsReducer.cards);
+
   return (
     <Fragment>
       <Profile userData={user} showPopupHandler={showPopupHandler} />;
-      <PlacesList cards={userCards} />
+      <PlacesList cards={cards} />
       {showPopup && (
         <Popup
           clickOutside={clickOutside}
@@ -43,16 +32,6 @@ const ProfilePage = ({
 
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
-  const reduxStore = await initializeStore();
-  const { dispatch } = reduxStore;
-  const res = await fetch('http://localhost:3000/api/cards/');
-  const data = await res.json();
-
-  const userCards = data.data.filter((card) => {
-    return card.owner === session.user.userId;
-  });
-  dispatch({ type: SET_USER_CARDS, cards: userCards });
-
   if (!session) {
     return {
       redirect: {
@@ -61,6 +40,17 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
+  const reduxStore = await initializeStore();
+  const { dispatch } = reduxStore;
+  const res = await fetch('http://localhost:3000/api/cards/');
+  const data = await res.json();
+
+  const userCards = data.data.filter((card) => {
+    return card.owner === session.user.userId;
+  });
+
+  dispatch({ type: SET_CARDS, cards: userCards });
+
   dispatch({
     type: SET_USER,
     user: session.user,

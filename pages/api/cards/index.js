@@ -41,7 +41,7 @@ const handler = async (req, res) => {
       await connectDB();
 
       const cards = await Card.find({});
-      return res.status(201).json({
+      return res.status(200).json({
         message: 'all cards',
         data: cards,
       });

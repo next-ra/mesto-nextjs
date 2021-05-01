@@ -1,23 +1,34 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCard } from '../../controllers/cards';
-import { DELETE_CARD, DELETE_USER_CARD } from '../../redux/actions/types';
+import { deleteCard, likeCard, removeLike } from '../../controllers/cards';
+import {
+  ADD_LIKE,
+  DELETE_CARD,
+  DELETE_USER_CARD,
+  REMOVE_LIKE,
+  SET_CARD,
+} from '../../redux/actions/types';
+
 import ImagePopup from '../image-popup/image-popup';
 import styles from './place-card.module.css';
 
 const PlaceCard = (props) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userReducer.user.userId);
-
   const [showImage, setShowImage] = useState(false);
   const cardIdRef = useRef();
-
+  const likeRef = useRef();
   const { image, name, id, likes, owner } = props;
 
   const isOwner = (owner, userId) => {
     if (owner === userId) return true;
     else return false;
   };
+  const likeStyle = [styles['like-icon']];
+
+  if (likes.includes(userId)) {
+    likeStyle.push(styles['like-icon_liked']);
+  }
 
   const deleteHandler = async () => {
     const cardId = await cardIdRef.current.id;
@@ -35,6 +46,27 @@ const PlaceCard = (props) => {
   const showImageHandler = () => {
     setShowImage((state) => !state);
   };
+
+  const likesHandler = async () => {
+    const isLiked = await likeRef.current.className.includes('liked');
+    const cardId = await cardIdRef.current.id;
+    if (isLiked) {
+      removeLike(cardId, userId);
+      dispatch({
+        type: REMOVE_LIKE,
+        cardId,
+        userId,
+      });
+    } else {
+      likeCard(cardId, userId);
+      dispatch({
+        type: ADD_LIKE,
+        cardId,
+        userId,
+      });
+    }
+  };
+
   return (
     <>
       <div className={styles['place-card']} id={id} ref={cardIdRef}>
@@ -52,7 +84,11 @@ const PlaceCard = (props) => {
         <div className={styles.description}>
           <h3 className={styles.name}>{name}</h3>
           <div className={styles['like-box']}>
-            <button className={styles['like-icon']} />
+            <button
+              className={likeStyle.join(' ')}
+              onClick={likesHandler}
+              ref={likeRef}
+            />
             <p className={styles['like-counter']}>{likes.length || 0}</p>
           </div>
         </div>

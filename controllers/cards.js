@@ -11,7 +11,7 @@ const createCard = async (name, link, owner) => {
   });
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || 'something_went_wrong');
+    throw new Error(data.message || 'Something_went_wrong');
   }
   return data;
 };
@@ -37,34 +37,52 @@ const deleteCard = async (cardId) => {
   });
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || 'something_went_wrong');
+    throw new Error(data.message || 'Something_went_wrong');
   } else return data;
 };
 
 const getUserCards = async () => {
-  const response = await fetch(`/api/cards`, {
-    method: 'GET',
+  const response = await fetch(`/api/cards`);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Something_went_wrong');
+  }
+  return data;
+};
 
+const likeCard = async (cardId, userId) => {
+  const response = await fetch(`/api/cards/likes`, {
+    method: 'PUT',
+    body: JSON.stringify({ cardId, userId }),
     headers: {
       'Content-Type': 'application/json',
     },
   });
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || 'something_went_wrong');
-  }
-  return data;
-  // try {
-  //   await connectDB();
-  //   const data = await Card.find({ owner: ownerId }).orFail(
-  //     new NotFound(articleRes.notFound),
-  //   );
-  //   const cards = JSON.parse(JSON.stringify(data));
-  //   res.status(200).send({ data: cards });
-  //   return cards;
-  // } catch (err) {
-  //   console.log(err);
-  // }
+    throw new Error(data.message || 'Something_went_wrong');
+  } else return data;
 };
 
-export { createCard, getAllCards, deleteCard, getUserCards };
+const removeLike = async (cardId, userId) => {
+  const response = await fetch(`/api/cards/likes`, {
+    method: 'DELETE',
+    body: JSON.stringify({ cardId, userId }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Something_went_wrong');
+  } else return data;
+};
+
+export {
+  createCard,
+  getAllCards,
+  deleteCard,
+  getUserCards,
+  likeCard,
+  removeLike,
+};

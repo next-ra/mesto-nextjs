@@ -33,7 +33,7 @@ const MainHeader = () => {
           {session && (
             <li>
               <Link href={isProfile ? '/' : '/profile'}>
-                {isProfile ? 'На главную' : 'Мой профиль'}
+                {isProfile ? 'На главную' : 'В мой профиль'}
               </Link>
             </li>
           )}

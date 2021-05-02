@@ -3,9 +3,17 @@ import {
   DELETE_USER_CARD,
   SET_USER,
   SET_USER_CARDS,
+  SHOW_EDIT_POPUP,
+  SHOW_PLACE_POPUP,
 } from '../actions/types';
 
-const userReducer = (state = { user: 'noUser', cards: [] }, action) => {
+const defaultState = {
+  user: 'noUser',
+  cards: [],
+  popupToShow: 'addNewPlace', // 'addNewPlace' or 'editInfo'
+};
+
+const userReducer = (state = defaultState, action) => {
   switch (action.type) {
     case SET_USER:
       return {
@@ -26,6 +34,16 @@ const userReducer = (state = { user: 'noUser', cards: [] }, action) => {
       return {
         ...state,
         cards: state.cards.filter((card) => card._id !== action.cardId),
+      };
+    case SHOW_EDIT_POPUP:
+      return {
+        ...state,
+        popupToShow: 'editInfo',
+      };
+    case SHOW_PLACE_POPUP:
+      return {
+        ...state,
+        popupToShow: 'addNewPlace',
       };
     default:
       return { ...state };

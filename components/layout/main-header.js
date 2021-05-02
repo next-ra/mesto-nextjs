@@ -1,8 +1,13 @@
+import { signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/client';
+import { useRouter } from 'next/router';
 import styles from './main-header.module.css';
-const MainHeader = (props) => {
+
+const MainHeader = () => {
   const [session, loading] = useSession();
+
+  const router = useRouter();
+  const isProfile = router.pathname === '/profile';
 
   const logoutHandler = () => {
     signOut();
@@ -27,7 +32,9 @@ const MainHeader = (props) => {
 
           {session && (
             <li>
-              <Link href="/profile">Профиль</Link>
+              <Link href={isProfile ? '/' : '/profile'}>
+                {isProfile ? 'На главную' : 'Мой профиль'}
+              </Link>
             </li>
           )}
           {session && (

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import PlacesList from '../../components/places/places-list';
 import Popup from '../../components/popup/popup';
 import Profile from '../../components/user/profile';
+import { getAllCards } from '../../controllers/cards';
 import { SET_CARDS, SET_USER } from '../../redux/actions/types';
 import { initializeStore } from '../../redux/store';
 
@@ -42,10 +43,9 @@ export const getServerSideProps = async (context) => {
   }
   const reduxStore = await initializeStore();
   const { dispatch } = reduxStore;
-  const res = await fetch('http://localhost:3000/api/cards/');
-  const data = await res.json();
+  const cards = await getAllCards();
 
-  const userCards = data.data.filter((card) => {
+  const userCards = cards.data.filter((card) => {
     return card.owner === session.user.userId;
   });
 

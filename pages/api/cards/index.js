@@ -40,7 +40,7 @@ const handler = async (req, res) => {
     try {
       await connectDB();
 
-      const cards = await Card.find({});
+      const cards = await Card.find({}).orFail(new Error('cards not found'));
       return res.status(200).json({
         message: 'all cards',
         data: cards,

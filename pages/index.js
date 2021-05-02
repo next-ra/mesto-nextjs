@@ -38,6 +38,7 @@ const HomePage = (props) => {
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
   const cards = await getAllCards();
+
   const reduxStore = await initializeStore();
   const { dispatch } = reduxStore;
   if (session) {
@@ -49,7 +50,7 @@ export const getServerSideProps = async (context) => {
 
   dispatch({
     type: SET_CARDS,
-    cards,
+    cards: cards.data,
   });
   return { props: { initialReduxState: reduxStore.getState() } };
 };

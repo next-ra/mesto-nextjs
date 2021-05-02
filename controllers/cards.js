@@ -17,14 +17,12 @@ const createCard = async (name, link, owner) => {
 };
 
 const getAllCards = async () => {
-  await connectDB();
-  const data = await Card.find({});
-  if (!data) {
-    return [];
+  const response = await fetch('http://localhost:3000/api/cards/');
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Something_went_wrong');
   }
-  const cards = JSON.parse(JSON.stringify(data));
-
-  return cards;
+  return data;
 };
 
 const deleteCard = async (cardId) => {

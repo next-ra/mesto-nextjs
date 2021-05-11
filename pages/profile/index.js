@@ -52,6 +52,8 @@ export const getServerSideProps = async (context) => {
     return card.owner === session.user.userId;
   });
 
+  console.log(session.user, 'USER');
+
   dispatch({ type: SET_CARDS, cards: userCards });
   if (state.userReducer.user === 'noUser') {
     dispatch({

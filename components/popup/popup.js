@@ -4,16 +4,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCard } from '../../controllers/cards';
 import { updateUserInfo } from '../../controllers/users';
-import {
-  ADD_USER_CARD,
-  SET_CARD,
-  SET_USER,
-  UPDATE_USER,
-} from '../../redux/actions/types';
+import { ADD_USER_CARD, SET_CARD, SET_USER } from '../../redux/actions/types';
 import TextField from './popup-inputs';
 import styles from './popup.module.css';
-
-let renderCount = 0;
 
 const Popup = ({ clickOutside, showPopupHandler }) => {
   const user = useSelector((state) => state.userReducer.user);
@@ -46,19 +39,16 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
     } else {
       const { name, about } = data;
       const result = await updateUserInfo(name, about, owner);
-      console.log(result, 'user');
-      const newsession = await getSession(result.user);
-      console.log(newsession, 'new-session');
+      const session = await getSession();
       dispatch({
-        type: UPDATE_USER,
-        user: result.user,
+        type: SET_USER,
+        user: session.user,
       });
       console.log(result);
       showPopupHandler();
     }
   };
-  renderCount++;
-  console.log(renderCount);
+
   return (
     <div className={styles.popup}>
       <div className={styles.content} ref={clickOutside}>
@@ -117,7 +107,8 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
                 errors={errors}
                 rules={{
                   required: true,
-                  pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
+                  pattern:
+                    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
                 }}
               />
             </>

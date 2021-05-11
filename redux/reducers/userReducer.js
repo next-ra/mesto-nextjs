@@ -5,7 +5,6 @@ import {
   SET_USER_CARDS,
   SHOW_EDIT_POPUP,
   SHOW_PLACE_POPUP,
-  UPDATE_USER,
 } from '../actions/types';
 
 const defaultState = {
@@ -21,11 +20,7 @@ const userReducer = (state = defaultState, action) => {
         ...state,
         user: action.user,
       };
-    case UPDATE_USER:
-      return {
-        ...state,
-        user: action.user,
-      };
+
     case SET_USER_CARDS:
       return {
         ...state,

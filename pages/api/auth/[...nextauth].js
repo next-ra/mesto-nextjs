@@ -13,28 +13,31 @@ export default NextAuth({
     async jwt(token, profile) {
       profile && (token.userId = profile.userId);
       profile && (token.about = profile.about);
+      !profile && (token.loggedIn = true); // объект профиль доступен только при логине,
+      // проверка что этот вызов уже после логина
+
       return token;
     },
-    session: async (session, user) => {
-      // console.log('session: ', session, 'user: ', user);
-      const res = await fetch('http://localhost:3000/api/users/me');
-      // console.log(res);
-      session.user.userId = user.userId;
-      session.user.about = user.about;
+    session: async (session, token) => {
+      session.user.userId = token.userId;
+      if (token.loggedIn) {
+        // Если пользователь залогинен проверям актуальность данных в базе
+        const res = await fetch(
+          `http://localhost:3000/api/users/${token.userId}`,
+        );
+        const data = await res.json();
+        // Перезаписываем данные из базы в сессию
+        session.user.name = data.data.name;
+        session.user.image = data.data.avatar;
+        session.user.about = data.data.about;
+        console.log(session, 'session');
+        return session;
+      }
+
       return session;
     },
-    // session: async (session) => {
-    //   const newSession = session;
-
-    //   const res = await fetch('http://localhost:3000/api/users/me');
-    //   // if (res.status === 200) {
-    //   //   const user = await res.json();
-    //   //   newSession.user.name = user.name;
-    //   // }
-    //   console.log(res);
-    //   return Promise.resolve(newSession);
-    // },
   },
+
   providers: [
     Providers.Credentials({
       async authorize(credentials) {

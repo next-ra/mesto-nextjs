@@ -9,7 +9,7 @@ import TextField from './popup-inputs';
 import styles from './popup.module.css';
 
 const Popup = ({ clickOutside, showPopupHandler }) => {
-  const user = useSelector((state) => state.userReducer.user);
+  const popupTitle = useSelector((state) => state.userReducer.popupTitle);
 
   const dispatch = useDispatch();
 
@@ -58,7 +58,7 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
           className={styles.close}
           onClick={showPopupHandler}
         />
-        <h3 className={styles.title}>Новое место</h3>
+        <h3 className={styles.title}>{popupTitle}</h3>
         <form
           onSubmit={handleSubmit(submitHandler)}
           className={styles.form}
@@ -113,7 +113,21 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
               />
             </>
           )}
-
+          {popupState === 'updateAvatar' && (
+            <TextField
+              type="url"
+              name="link"
+              label="link"
+              placeholder="Ссылка на Аватар"
+              register={register}
+              errors={errors}
+              rules={{
+                required: true,
+                pattern:
+                  /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
+              }}
+            />
+          )}
           <button
             disabled={!isDirty || !isValid}
             type="submit"

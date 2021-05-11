@@ -1,5 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { SHOW_EDIT_POPUP, SHOW_PLACE_POPUP } from '../../redux/actions/types';
+import {
+  SHOW_EDIT_POPUP,
+  SHOW_PLACE_POPUP,
+  SHOW_UPDATE_AVATAR_POPUP,
+} from '../../redux/actions/types';
 import styles from './user-info.module.css';
 
 const UserInfo = ({ showPopupHandler, userData }) => {
@@ -19,9 +23,17 @@ const UserInfo = ({ showPopupHandler, userData }) => {
     showPopupHandler();
   };
 
+  const showUpdateAvatarPopup = () => {
+    dispatch({
+      type: SHOW_UPDATE_AVATAR_POPUP,
+    });
+    showPopupHandler();
+  };
+
   return (
     <div className={styles.info}>
       <div
+        onClick={showUpdateAvatarPopup}
         className={styles.photo}
         style={{
           backgroundImage: `url(${userData.image})`,

@@ -2,15 +2,16 @@ import {
   ADD_USER_CARD,
   DELETE_USER_CARD,
   SET_USER,
-  SET_USER_CARDS,
   SHOW_EDIT_POPUP,
   SHOW_PLACE_POPUP,
+  SHOW_UPDATE_AVATAR_POPUP,
 } from '../actions/types';
 
 const defaultState = {
   user: 'noUser',
   cards: [],
-  popupToShow: 'addNewPlace', // 'addNewPlace' or 'editInfo'
+  popupToShow: '', // 'addNewPlace' or 'editInfo' or 'updateAvatar'
+  popupTitle: '', // Новое место, Редактировать профиль, Обновить аватар
 };
 
 const userReducer = (state = defaultState, action) => {
@@ -21,11 +22,6 @@ const userReducer = (state = defaultState, action) => {
         user: action.user,
       };
 
-    case SET_USER_CARDS:
-      return {
-        ...state,
-        cards: action.cards,
-      };
     case ADD_USER_CARD:
       return {
         ...state,
@@ -40,11 +36,19 @@ const userReducer = (state = defaultState, action) => {
       return {
         ...state,
         popupToShow: 'editInfo',
+        popupTitle: 'Редактировать профиль',
       };
     case SHOW_PLACE_POPUP:
       return {
         ...state,
         popupToShow: 'addNewPlace',
+        popupTitle: 'Новое место',
+      };
+    case SHOW_UPDATE_AVATAR_POPUP:
+      return {
+        ...state,
+        popupToShow: 'updateAvatar',
+        popupTitle: 'Обновить аватар',
       };
     default:
       return { ...state };

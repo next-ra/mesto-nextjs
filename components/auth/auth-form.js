@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import { getSession, signIn } from 'next-auth/client';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { createUser } from '../../controllers/users';
+import { SET_USER } from '../../redux/actions/types';
+import styles from './auth-form.module.css';
 import TextField from './text-field';
 
-import styles from './auth-form.module.css';
-import { useDispatch } from 'react-redux';
-import { SET_USER } from '../../redux/actions/types';
 
 function AuthForm() {
   const {

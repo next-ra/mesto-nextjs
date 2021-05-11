@@ -22,4 +22,19 @@ const getUserInformation = async () => {
   return data;
 };
 
-export { createUser, getUserInformation };
+const updateUserInfo = async (name, about, owner) => {
+  const response = await fetch(`api/users/me`, {
+    method: 'PATCH',
+    body: JSON.stringify({ name, about, owner }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'something_went_wrong');
+  }
+  return data;
+};
+
+export { createUser, getUserInformation, updateUserInfo };

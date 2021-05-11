@@ -1,45 +1,64 @@
 import { getSession } from 'next-auth/client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCard } from '../../controllers/cards';
-import { ADD_USER_CARD, SET_CARD } from '../../redux/actions/types';
+import { updateUserInfo } from '../../controllers/users';
+import {
+  ADD_USER_CARD,
+  SET_CARD,
+  SET_USER,
+  UPDATE_USER,
+} from '../../redux/actions/types';
 import TextField from './popup-inputs';
 import styles from './popup.module.css';
 
+let renderCount = 0;
+
 const Popup = ({ clickOutside, showPopupHandler }) => {
+  const user = useSelector((state) => state.userReducer.user);
+
   const dispatch = useDispatch();
 
   const popupState = useSelector((state) => state.userReducer.popupToShow);
-  console.log(popupState, 'popup');
-
   const {
-    reset,
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const fieldsToShow = true;
+    formState: { errors, isDirty, isValid },
+  } = useForm({ mode: 'onChange' });
 
   const submitHandler = async (data) => {
     const session = await getSession();
     const owner = session.user.userId;
-    const { name, link } = data;
-
-    const result = await createCard(name, link, owner);
-    console.log(result);
-    showPopupHandler();
-    dispatch({
-      type: SET_CARD,
-      card: result.data,
-    });
-    dispatch({
-      type: ADD_USER_CARD,
-      card: result.data,
-    });
+    if (popupState === 'addNewPlace') {
+      const { name, link } = data;
+      const result = await createCard(name, link, owner);
+      console.log(result);
+      showPopupHandler();
+      dispatch({
+        type: SET_CARD,
+        card: result.data,
+      });
+      dispatch({
+        type: ADD_USER_CARD,
+        card: result.data,
+      });
+    } else {
+      const { name, about } = data;
+      const result = await updateUserInfo(name, about, owner);
+      console.log(result, 'user');
+      const newsession = await getSession(result.user);
+      console.log(newsession, 'new-session');
+      dispatch({
+        type: UPDATE_USER,
+        user: result.user,
+      });
+      console.log(result);
+      showPopupHandler();
+    }
   };
-
+  renderCount++;
+  console.log(renderCount);
   return (
     <div className={styles.popup}>
       <div className={styles.content} ref={clickOutside}>
@@ -105,6 +124,7 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
           )}
 
           <button
+            disabled={!isDirty || !isValid}
             type="submit"
             className={`${styles.button} ${styles[`button-edit`]}`}
           >

@@ -3,9 +3,8 @@ import { SHOW_EDIT_POPUP, SHOW_PLACE_POPUP } from '../../redux/actions/types';
 import styles from './user-info.module.css';
 
 const UserInfo = ({ showPopupHandler, userData }) => {
-  const popupState = useSelector((state) => state.userReducer.popupToShow);
-  console.log(popupState);
   const dispatch = useDispatch();
+
   const showPlacePopup = () => {
     dispatch({
       type: SHOW_PLACE_POPUP,

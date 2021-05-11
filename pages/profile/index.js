@@ -33,6 +33,7 @@ const ProfilePage = ({
 
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
+  console.log(session);
   if (!session) {
     return {
       redirect: {
@@ -42,6 +43,8 @@ export const getServerSideProps = async (context) => {
     };
   }
   const reduxStore = await initializeStore();
+  const state = reduxStore.getState();
+  console.log(state.userReducer.user);
   const { dispatch } = reduxStore;
   const cards = await getAllCards();
 
@@ -50,11 +53,12 @@ export const getServerSideProps = async (context) => {
   });
 
   dispatch({ type: SET_CARDS, cards: userCards });
-
-  dispatch({
-    type: SET_USER,
-    user: session.user,
-  });
+  if (state.userReducer.user === 'noUser') {
+    dispatch({
+      type: SET_USER,
+      user: session.user,
+    });
+  }
 
   return { props: { initialReduxState: reduxStore.getState() } };
 };

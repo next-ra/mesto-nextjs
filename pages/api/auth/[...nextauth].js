@@ -16,10 +16,24 @@ export default NextAuth({
       return token;
     },
     session: async (session, user) => {
+      // console.log('session: ', session, 'user: ', user);
+      const res = await fetch('http://localhost:3000/api/users/me');
+      // console.log(res);
       session.user.userId = user.userId;
       session.user.about = user.about;
       return session;
     },
+    // session: async (session) => {
+    //   const newSession = session;
+
+    //   const res = await fetch('http://localhost:3000/api/users/me');
+    //   // if (res.status === 200) {
+    //   //   const user = await res.json();
+    //   //   newSession.user.name = user.name;
+    //   // }
+    //   console.log(res);
+    //   return Promise.resolve(newSession);
+    // },
   },
   providers: [
     Providers.Credentials({

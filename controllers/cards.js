@@ -1,6 +1,3 @@
-import Card from '../models/card';
-import connectDB from '../middleware/mongodb';
-
 const createCard = async (name, link, owner) => {
   const response = await fetch(`/api/cards`, {
     method: 'POST',

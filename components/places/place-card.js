@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCard, likeCard, removeLike } from '../../controllers/cards';
+import { useSession } from 'next-auth/client';
 import {
   ADD_LIKE,
   DELETE_CARD,
@@ -13,6 +14,7 @@ import ImagePopup from '../image-popup/image-popup';
 import styles from './place-card.module.css';
 
 const PlaceCard = (props) => {
+  const [session] = useSession();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userReducer.user.userId);
   const [showImage, setShowImage] = useState(false);
@@ -48,6 +50,7 @@ const PlaceCard = (props) => {
   };
 
   const likesHandler = async () => {
+    if (!session) return;
     const isLiked = await likeRef.current.className.includes('liked');
     const cardId = await cardIdRef.current.id;
     if (isLiked) {

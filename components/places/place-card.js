@@ -37,19 +37,16 @@ const PlaceCard = (props) => {
   }
 
   const deleteHandler = async () => {
-    // const cardId = await cardIdRef.current.id;
-    // await deleteCard(cardId);
-    // dispatch({
-    //   type: DELETE_CARD,
-    //   cardId,
-    // });
-    // dispatch({
-    //   type: DELETE_USER_CARD,
-    //   cardId,
-    // });
-    setShowDeletePopup(true);
-
-    console.log('click on delete');
+    const cardId = await cardIdRef.current.id;
+    await deleteCard(cardId);
+    dispatch({
+      type: DELETE_CARD,
+      cardId,
+    });
+    dispatch({
+      type: DELETE_USER_CARD,
+      cardId,
+    });
   };
 
   const showImageHandler = (e) => {
@@ -90,7 +87,9 @@ const PlaceCard = (props) => {
         >
           {isOwner(owner, userId) && (
             <button
-              onClick={deleteHandler}
+              onClick={() => {
+                setShowDeletePopup(true);
+              }}
               className={styles['delete-icon']}
               ref={trashRef}
             />
@@ -115,7 +114,12 @@ const PlaceCard = (props) => {
           showImageHandler={showImageHandler}
         />
       )}
-      {showDeletePopup && <DeletePopup />}
+      {showDeletePopup && (
+        <DeletePopup
+          onDelete={deleteHandler}
+          setShowDeletePopup={setShowDeletePopup}
+        />
+      )}
     </>
   );
 };

@@ -1,10 +1,12 @@
 import styles from './delete-popup.module.css';
 
-const DeletePopup = () => {
+const DeletePopup = ({ onDelete, setShowDeletePopup }) => {
   const deleteCardHandler = () => {
-    console.log('yes');
+    onDelete();
   };
-
+  const closePopupHandler = () => {
+    setShowDeletePopup(false);
+  };
   return (
     <div className={styles.popup}>
       <div className={styles['popup-delete']}>
@@ -13,7 +15,9 @@ const DeletePopup = () => {
           <button onClick={deleteCardHandler} className={styles.btn}>
             да
           </button>
-          <button className={styles.btn}>нет</button>
+          <button onClick={closePopupHandler} className={styles.btn}>
+            нет
+          </button>
         </div>
       </div>
     </div>

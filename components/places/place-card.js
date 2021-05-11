@@ -50,7 +50,10 @@ const PlaceCard = (props) => {
   };
 
   const showImageHandler = (e) => {
-    if (e.target.className !== trashRef.current.className)
+    if (
+      trashRef.current === undefined || //не на всех карточках есть корзина, если ее нет можно открывать попап
+      e.target.className !== trashRef.current.className // а если мы кликнули по корзине то не надо показывать попап
+    )
       setShowImage((state) => !state);
   };
 

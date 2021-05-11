@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCard, likeCard, removeLike } from '../../controllers/cards';
 import { useSession } from 'next-auth/client';
@@ -7,25 +7,29 @@ import {
   DELETE_CARD,
   DELETE_USER_CARD,
   REMOVE_LIKE,
-  SET_CARD,
 } from '../../redux/actions/types';
 
 import ImagePopup from '../image-popup/image-popup';
 import styles from './place-card.module.css';
+import DeletePopup from '../confirm-popup/delete-popup';
 
 const PlaceCard = (props) => {
   const [session] = useSession();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userReducer.user.userId);
   const [showImage, setShowImage] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
   const cardIdRef = useRef();
   const likeRef = useRef();
+
+  const trashRef = useRef();
   const { image, name, id, likes, owner } = props;
 
   const isOwner = (owner, userId) => {
     if (owner === userId) return true;
     else return false;
   };
+
   const likeStyle = [styles['like-icon']];
 
   if (likes.includes(userId)) {
@@ -33,20 +37,24 @@ const PlaceCard = (props) => {
   }
 
   const deleteHandler = async () => {
-    const cardId = await cardIdRef.current.id;
-    await deleteCard(cardId);
-    dispatch({
-      type: DELETE_CARD,
-      cardId,
-    });
-    dispatch({
-      type: DELETE_USER_CARD,
-      cardId,
-    });
+    // const cardId = await cardIdRef.current.id;
+    // await deleteCard(cardId);
+    // dispatch({
+    //   type: DELETE_CARD,
+    //   cardId,
+    // });
+    // dispatch({
+    //   type: DELETE_USER_CARD,
+    //   cardId,
+    // });
+    setShowDeletePopup(true);
+
+    console.log('click on delete');
   };
 
-  const showImageHandler = () => {
-    setShowImage((state) => !state);
+  const showImageHandler = (e) => {
+    if (e.target.className !== trashRef.current.className)
+      setShowImage((state) => !state);
   };
 
   const likesHandler = async () => {
@@ -81,7 +89,11 @@ const PlaceCard = (props) => {
           }}
         >
           {isOwner(owner, userId) && (
-            <button onClick={deleteHandler} className={styles['delete-icon']} />
+            <button
+              onClick={deleteHandler}
+              className={styles['delete-icon']}
+              ref={trashRef}
+            />
           )}
         </div>
         <div className={styles.description}>
@@ -103,6 +115,7 @@ const PlaceCard = (props) => {
           showImageHandler={showImageHandler}
         />
       )}
+      {showDeletePopup && <DeletePopup />}
     </>
   );
 };

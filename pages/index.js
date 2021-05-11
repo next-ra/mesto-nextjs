@@ -1,19 +1,16 @@
-import { getSession, useSession } from 'next-auth/client';
+import { getSession } from 'next-auth/client';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import PlacesList from '../components/places/places-list';
 import Popup from '../components/popup/popup';
-import Profile from '../components/user/profile';
 import { getAllCards } from '../controllers/cards';
 import { SET_CARDS, SET_USER } from '../redux/actions/types';
 import { initializeStore } from '../redux/store';
 
 const HomePage = (props) => {
   const cards = useSelector((state) => state.cardsReducer.cards);
-  const user = useSelector((state) => state.userReducer.user);
-  const { showPopup, showPopupHandler, clickOutside } = props;
 
-  const [session, loading] = useSession();
+  const { showPopup, showPopupHandler, clickOutside } = props;
 
   return (
     <div>
@@ -21,9 +18,11 @@ const HomePage = (props) => {
         <title>NextJS Mesto</title>
         <link rel="icon" href="/favicon-mesto.ico" />
       </Head>
-      {session && (
-        <Profile userData={user} showPopupHandler={showPopupHandler} />
-      )}
+
+      <h1 style={{ color: 'white', textAlign: 'center', fontSize: '3rem' }}>
+        Карточки пользователей:
+      </h1>
+
       <PlacesList cards={cards} />
       {showPopup && (
         <Popup

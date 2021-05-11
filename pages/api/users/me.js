@@ -23,20 +23,6 @@ const handler = async (req, res) => {
         .json({ message: error.message || 'something_went_wrong' });
     }
   }
-  if (req.method === 'GET') {
-    try {
-      connectDB();
-      const user = await User.findById();
-      return res.status(200).json({
-        message: 'success',
-        user: user,
-      });
-    } catch (error) {
-      return res
-        .status(error.status || 500)
-        .json({ message: error.message || 'something_went_wrong' });
-    }
-  }
 };
 
 export default handler;

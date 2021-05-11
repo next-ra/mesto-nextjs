@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { SHOW_EDIT_POPUP, SHOW_PLACE_POPUP } from '../../redux/actions/types';
 import styles from './user-info.module.css';
 

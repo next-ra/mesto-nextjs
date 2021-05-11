@@ -6,7 +6,7 @@ const handler = async (req, res) => {
     try {
       await connectDB();
       const { cardId, userId } = req.body;
-      console.log(req.body, 'like');
+
       const cardToLike = await Card.findByIdAndUpdate(
         cardId,
         {
@@ -28,7 +28,7 @@ const handler = async (req, res) => {
     try {
       await connectDB();
       const { cardId, userId } = req.body;
-      console.log(req.body, 'dislike');
+
       const cardToLike = await Card.findByIdAndUpdate(
         cardId,
         {

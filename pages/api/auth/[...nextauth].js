@@ -32,7 +32,7 @@ export default NextAuth({
         session.user.name = data.data.name;
         session.user.image = data.data.avatar;
         session.user.about = data.data.about;
-        console.log(session, 'session');
+
         return session;
       }
 

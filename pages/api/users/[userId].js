@@ -3,8 +3,7 @@ import connectDB from '../../../middleware/mongodb';
 
 async function handler(req, res) {
   const userId = req.query.userId;
-  console.log(userId);
-  console.log(req.body);
+
   if (req.method === 'PATCH') {
     try {
       await connectDB();
@@ -12,20 +11,11 @@ async function handler(req, res) {
       let updateData = await {
         ...req.body,
       };
-
+      console.log(updateData, 'UPDATE_DATA');
       const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
         runValidators: true,
         new: true,
       }).orFail(new Error('user not found'));
-
-      // const user = await User.findByIdAndUpdate(
-      //   userId,
-      //   {
-      //     name: req.body.name,
-      //     about: req.body.about,
-      //   },
-      //   { runValidators: true, new: true },
-      // );
 
       return res.status(200).json({
         message: 'User updated',

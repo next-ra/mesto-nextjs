@@ -35,9 +35,9 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
         type: ADD_USER_CARD,
         card: result.data,
       });
-    } else if (popupState === 'editInfo') {
-      const { name, about } = data;
-      const result = await updateUserInfo(name, about, userId);
+    } else {
+      const userData = { ...data, userId };
+      const result = await updateUserInfo(userData);
       const session = await getSession();
       dispatch({
         type: SET_USER,
@@ -115,8 +115,8 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
           {popupState === 'updateAvatar' && (
             <TextField
               type="url"
-              name="link"
-              label="link"
+              name="avatar"
+              label="avatar"
               placeholder="Ссылка на Аватар"
               register={register}
               errors={errors}

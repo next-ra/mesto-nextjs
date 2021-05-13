@@ -13,10 +13,10 @@ const createUser = async (name, email, password) => {
   return data;
 };
 
-const updateUserInfo = async (name, about, userId) => {
-  const response = await fetch(`api/users/${userId}`, {
+const updateUserInfo = async (userData) => {
+  const response = await fetch(`api/users/${userData.userId}`, {
     method: 'PATCH',
-    body: JSON.stringify({ name, about, userId }),
+    body: JSON.stringify(userData),
     headers: {
       'Content-Type': 'application/json',
     },

@@ -3,7 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCard } from '../../controllers/cards';
 import { updateUserInfo } from '../../controllers/users';
-import { ADD_USER_CARD, SET_CARD, SET_USER } from '../../redux/actions/types';
+import {
+  ADD_USER_CARD,
+  SET_CARD,
+  SET_USER,
+  SHOW_NOTIFICATION,
+} from '../../redux/actions/types';
 import TextField from './popup-inputs';
 import styles from './popup.module.css';
 
@@ -22,6 +27,12 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
   } = useForm({ mode: 'onChange' });
 
   const submitHandler = async (data) => {
+    dispatch({
+      type: SHOW_NOTIFICATION,
+      status: 'pending',
+      title: 'Отправка...',
+      message: 'Отправляем данные на сервер.',
+    });
     if (popupState === 'addNewPlace') {
       const { name, link } = data;
       const result = await createCard(name, link, userId);
@@ -35,6 +46,12 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
         type: ADD_USER_CARD,
         card: result.data,
       });
+      dispatch({
+        type: SHOW_NOTIFICATION,
+        status: 'success',
+        title: 'Успех!',
+        message: result.message,
+      });
     } else {
       const userData = { ...data, userId };
       const result = await updateUserInfo(userData);
@@ -43,7 +60,13 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
         type: SET_USER,
         user: session.user,
       });
-      console.log(result);
+      dispatch({
+        type: SHOW_NOTIFICATION,
+        status: 'success',
+        title: 'Успех!',
+        message: result.message,
+      });
+
       showPopupHandler();
     }
   };

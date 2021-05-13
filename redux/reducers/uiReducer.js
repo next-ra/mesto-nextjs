@@ -1,21 +1,20 @@
-import { SHOW_NOTIFICATION } from '../actions/types';
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from '../actions/types';
 
-const uiReducer = (
-  state = {
-    notification: {
-      status: 'error',
-      title: 'test',
-      message: 'test',
-    },
-  },
-  action,
-) => {
+const uiReducer = (state = { notification: null }, action) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return {
-        status: action.payload.status,
-        title: action.payload.title,
-        message: action.payload.message,
+        ...state,
+        notification: {
+          status: action.status,
+          title: action.title,
+          message: action.message,
+        },
+      };
+    case HIDE_NOTIFICATION:
+      return {
+        ...state,
+        notification: null,
       };
     default:
       return { ...state };

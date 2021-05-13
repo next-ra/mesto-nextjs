@@ -80,9 +80,9 @@
   background-image: url(../../public/like-active.svg);
 }
 
-.like-icon:hover {
-  transform: scale(1.03);
-}
+/* .like-icon:hover {
+  transform: scale(1.01);
+} */
 
 .like-counter {
   margin: 0;

@@ -1,5 +1,4 @@
 import { getSession } from 'next-auth/client';
-import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCard } from '../../controllers/cards';
@@ -14,6 +13,8 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
   const dispatch = useDispatch();
 
   const popupState = useSelector((state) => state.userReducer.popupToShow);
+  const userId = useSelector((state) => state.userReducer.user.userId);
+
   const {
     register,
     handleSubmit,
@@ -21,11 +22,9 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
   } = useForm({ mode: 'onChange' });
 
   const submitHandler = async (data) => {
-    const session = await getSession();
-    const owner = session.user.userId;
     if (popupState === 'addNewPlace') {
       const { name, link } = data;
-      const result = await createCard(name, link, owner);
+      const result = await createCard(name, link, userId);
       console.log(result);
       showPopupHandler();
       dispatch({
@@ -36,9 +35,9 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
         type: ADD_USER_CARD,
         card: result.data,
       });
-    } else {
+    } else if (popupState === 'editInfo') {
       const { name, about } = data;
-      const result = await updateUserInfo(name, about, owner);
+      const result = await updateUserInfo(name, about, userId);
       const session = await getSession();
       dispatch({
         type: SET_USER,

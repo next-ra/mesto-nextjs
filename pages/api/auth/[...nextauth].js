@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import { checkPassword } from '../../../helpers/auth';
+
 import connectDB from '../../../middleware/mongodb';
 import User from '../../../models/user';
 
@@ -26,6 +27,7 @@ export default NextAuth({
           `http://localhost:3000/api/users/${token.userId}`,
         );
         const data = await res.json();
+
         // Перезаписываем данные из базы в сессию
         session.user.name = data.data.name;
         session.user.image = data.data.avatar;

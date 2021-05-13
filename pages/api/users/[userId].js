@@ -9,18 +9,27 @@ async function handler(req, res) {
     try {
       await connectDB();
 
-      const user = await User.findByIdAndUpdate(
-        userId,
-        {
-          name: req.body.name,
-          about: req.body.about,
-        },
-        { runValidators: true, new: true },
-      );
+      let updateData = await {
+        ...req.body,
+      };
+
+      const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+        runValidators: true,
+        new: true,
+      }).orFail(new Error('user not found'));
+
+      // const user = await User.findByIdAndUpdate(
+      //   userId,
+      //   {
+      //     name: req.body.name,
+      //     about: req.body.about,
+      //   },
+      //   { runValidators: true, new: true },
+      // );
 
       return res.status(200).json({
-        message: 'Information has changed',
-        user: user,
+        message: 'User updated',
+        user: updatedUser,
       });
     } catch (error) {
       return res

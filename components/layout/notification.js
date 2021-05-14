@@ -13,6 +13,9 @@ const Notification = (props) => {
     specialClasses = styles.success;
   }
 
+  if (props.status === 'tooltip') {
+    specialClasses = styles.tooltip;
+  }
   const cssClasses = `${styles.notification} ${specialClasses}`;
 
   const hideNotificationHandler = () => {

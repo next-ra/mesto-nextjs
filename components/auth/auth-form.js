@@ -4,10 +4,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { createUser } from '../../controllers/users';
-import { SET_USER } from '../../redux/actions/types';
+import { SET_USER, SHOW_NOTIFICATION } from '../../redux/actions/types';
 import styles from './auth-form.module.css';
 import TextField from './text-field';
-
 
 function AuthForm() {
   const {
@@ -27,33 +26,65 @@ function AuthForm() {
 
   const submitHandler = async (data) => {
     const { name, email, password } = data;
+    dispatch({
+      type: SHOW_NOTIFICATION,
+      status: 'pending',
+      title: 'Pending',
+      message: 'Отправляем данные на сервер',
+    });
 
     if (isLogin) {
-      const result = await signIn('credentials', {
-        redirect: false,
-        email: email,
-        password: password,
-      });
-
-      console.log(result);
-      if (!result.error) {
-        console.log(result);
-        const session = await getSession();
-        dispatch({
-          type: SET_USER,
-          user: session.user,
+      // логинимся
+      try {
+        const result = await signIn('credentials', {
+          redirect: false,
+          email: email,
+          password: password,
         });
-        router.replace('/profile');
+        if (!result.error) {
+          const session = await getSession();
+          dispatch({
+            type: SET_USER,
+            user: session.user,
+          });
+          await router.replace('/profile');
+          dispatch({
+            type: SHOW_NOTIFICATION,
+            status: 'success',
+            title: 'Поздравляем',
+            message: 'Вы успешно авторизованы!',
+          });
+        } else {
+          throw new Error(result.error);
+        }
+      } catch (err) {
+        dispatch({
+          type: SHOW_NOTIFICATION,
+          status: 'error',
+          title: 'Error!',
+          message: err.message || `Something went wrong`,
+        });
       }
     } else {
+      //  создание пользователя
       try {
         const result = await createUser(name, email, password);
-        console.log(result);
+
+        dispatch({
+          type: SHOW_NOTIFICATION,
+          status: 'success',
+          title: 'Поздравляем',
+          message: result.message,
+        });
         switchAuthModeHandler();
         reset();
       } catch (err) {
-        console.log(err.message);
-        // throw new Error(err.message || 'something went wrong');
+        dispatch({
+          type: SHOW_NOTIFICATION,
+          status: 'error',
+          title: 'Error!',
+          message: err.message || `Something went wrong`,
+        });
       }
     }
   };
@@ -83,7 +114,8 @@ function AuthForm() {
           errors={errors}
           rules={{
             required: true,
-            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            pattern:
+              /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
           }}
         />
 

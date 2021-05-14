@@ -12,7 +12,7 @@ const handler = async (req, res) => {
     await connectDB();
     const emailAlreadyExists = await User.findOne({ email });
     if (emailAlreadyExists) {
-      return res.status(409).json({ message: 'Email already exists!' });
+      return res.status(409).json({ message: 'Такая почта уже есть в базе!' });
     }
     const hashedPassword = await hashPassword(password);
     await User.create({
@@ -21,7 +21,7 @@ const handler = async (req, res) => {
       password: hashedPassword,
     });
     return res.status(201).json({
-      message: 'user_created',
+      message: 'Пользователь успешно создан',
     });
   } catch (error) {
     return res

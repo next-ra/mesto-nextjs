@@ -9,7 +9,7 @@ const handler = async (req, res) => {
       const { name, link, owner } = req.body;
       const card = await Card.create({ name, link, owner });
       return res.status(201).json({
-        message: 'card created successfully!',
+        message: 'Карточка успешно добавлена!',
         data: card,
       });
     } catch (err) {

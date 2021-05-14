@@ -62,8 +62,8 @@ const PlaceCard = (props) => {
     if (!session) {
       dispatch({
         type: SHOW_NOTIFICATION,
-        status: 'error',
-        title: 'Error',
+        status: 'tooltip',
+        title: 'Вы не авторизованы...',
         message: 'Войдите или зарегистрируйтесь!',
       });
       return;

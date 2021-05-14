@@ -46,7 +46,7 @@ export default NextAuth({
         await connectDB();
         const user = await User.findOne({ email: credentials.email })
           .select('+password')
-          .orFail(new Error('user not found'));
+          .orFail(new Error('Пользователь не найден'));
 
         const isValidPassword = await checkPassword(
           credentials.password,

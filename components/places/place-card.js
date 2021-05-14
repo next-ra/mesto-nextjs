@@ -7,6 +7,7 @@ import {
   DELETE_CARD,
   DELETE_USER_CARD,
   REMOVE_LIKE,
+  SHOW_NOTIFICATION,
 } from '../../redux/actions/types';
 
 import ImagePopup from '../image-popup/image-popup';
@@ -58,7 +59,16 @@ const PlaceCard = (props) => {
   };
 
   const likesHandler = async () => {
-    if (!session) return;
+    if (!session) {
+      dispatch({
+        type: SHOW_NOTIFICATION,
+        status: 'error',
+        title: 'Error',
+        message: 'Войдите или зарегистрируйтесь!',
+      });
+      return;
+    }
+
     const isLiked = await likeRef.current.className.includes('liked');
     const cardId = await cardIdRef.current.id;
     if (isLiked) {

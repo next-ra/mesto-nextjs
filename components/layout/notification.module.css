@@ -23,3 +23,23 @@
 .success {
   background-color: #1ad185;
 }
+
+.close {
+  height: 25px;
+  width: 25px;
+  background-color: #fafafa;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+}
+.close:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: '\274C';
+  font-size: 15px;
+  line-height: 25px;
+  text-align: center;
+}

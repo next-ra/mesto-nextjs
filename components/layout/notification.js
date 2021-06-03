@@ -12,7 +12,6 @@ const Notification = (props) => {
   if (props.status === 'success') {
     specialClasses = styles.success;
   }
-
   if (props.status === 'tooltip') {
     specialClasses = styles.tooltip;
   }

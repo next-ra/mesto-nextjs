@@ -17,9 +17,7 @@ const MainHeader = () => {
     <header className={styles.header}>
       <div>
         <Link href="/">
-          <a>
-            <img src="/logo.svg" alt="mesto logo" className={styles.logo} />
-          </a>
+          <a className={styles.logo}>Mesto NextJS</a>
         </Link>
       </div>
       <nav className={styles.navigation}>

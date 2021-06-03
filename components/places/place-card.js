@@ -71,6 +71,7 @@ const PlaceCard = (props) => {
 
     const isLiked = await likeRef.current.className.includes('liked');
     const cardId = await cardIdRef.current.id;
+    console.log(cardId);
     if (isLiked) {
       removeLike(cardId, userId);
       dispatch({

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { HIDE_NOTIFICATION } from '../../redux/actions/types';
-import styles from './Notification.module.css';
+import styles from './notification.module.css';
 
 const Notification = (props) => {
   const dispatch = useDispatch();

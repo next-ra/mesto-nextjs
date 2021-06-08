@@ -15,7 +15,7 @@ const handler = async (req, res) => {
     } catch (err) {
       return res
         .status(err.status || 500)
-        .json({ message: err.message || 'something_went_wrong' });
+        .json({ message: err.message || 'Что-то пошло не так...' });
     }
   }
 
@@ -32,7 +32,7 @@ const handler = async (req, res) => {
     } catch (err) {
       return res
         .status(err.status || 500)
-        .json({ message: err.message || 'something_went_wrong' });
+        .json({ message: err.message || 'Что-то пошло не так...' });
     }
   }
 
@@ -40,7 +40,9 @@ const handler = async (req, res) => {
     try {
       await connectDB();
 
-      const cards = await Card.find({}).orFail(new Error('cards not found'));
+      const cards = await Card.find({}).orFail(
+        new Error('Карточки не найдены'),
+      );
       return res.status(200).json({
         message: 'all cards',
         data: cards,
@@ -48,7 +50,7 @@ const handler = async (req, res) => {
     } catch (err) {
       return res
         .status(err.status || 500)
-        .json({ message: err.message || 'something_went_wrong' });
+        .json({ message: err.message || 'Что-то пошло не так...' });
     }
   }
 };

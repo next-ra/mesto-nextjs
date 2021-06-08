@@ -24,7 +24,7 @@ export default NextAuth({
       if (token.loggedIn) {
         // Если пользователь залогинен проверям актуальность данных в базе
         const res = await fetch(
-          `http://localhost:3000/api/users/${token.userId}`,
+          `http://localhost:8000/api/users/${token.userId}`,
         );
         const data = await res.json();
 

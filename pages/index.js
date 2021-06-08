@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import PlacesList from '../components/places/places-list';
 import Popup from '../components/popup/popup';
+import NoCardsYet from '../components/user/no-cards-yet';
 import { getAllCards } from '../controllers/cards';
 import { SET_CARDS, SET_USER } from '../redux/actions/types';
 import { initializeStore } from '../redux/store';
@@ -19,10 +20,10 @@ const HomePage = (props) => {
         <link rel="icon" href="/favicon-mesto.ico" />
       </Head>
 
-      <h1 style={{ color: 'white', textAlign: 'center', fontSize: '3rem' }}>
+      <h1 style={{ color: 'white', textAlign: 'center', fontSize: '2rem' }}>
         Карточки пользователей:
       </h1>
-
+      {cards.length == 0 && <NoCardsYet />}
       <PlacesList cards={cards} />
       {showPopup && (
         <Popup
@@ -37,7 +38,7 @@ const HomePage = (props) => {
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
   const cards = await getAllCards();
-
+  console.log(cards, 'cards');
   const reduxStore = await initializeStore();
   const { dispatch } = reduxStore;
   if (session) {
@@ -49,7 +50,7 @@ export const getServerSideProps = async (context) => {
 
   dispatch({
     type: SET_CARDS,
-    cards: cards.data,
+    cards: cards.data || [],
   });
   return { props: { initialReduxState: reduxStore.getState() } };
 };

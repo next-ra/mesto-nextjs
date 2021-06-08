@@ -14,10 +14,10 @@ const createCard = async (name, link, owner) => {
 };
 
 const getAllCards = async () => {
-  const response = await fetch('http://localhost:3000/api/cards/');
+  const response = await fetch('http://localhost:8000/api/cards/');
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || 'Something_went_wrong');
+    console.log(response);
   }
   return data;
 };
@@ -34,15 +34,6 @@ const deleteCard = async (cardId) => {
   if (!response.ok) {
     throw new Error(data.message || 'Something_went_wrong');
   } else return data;
-};
-
-const getUserCards = async () => {
-  const response = await fetch(`/api/cards`);
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.message || 'Something_went_wrong');
-  }
-  return data;
 };
 
 const likeCard = async (cardId, userId) => {
@@ -73,11 +64,4 @@ const removeLike = async (cardId, userId) => {
   } else return data;
 };
 
-export {
-  createCard,
-  getAllCards,
-  deleteCard,
-  getUserCards,
-  likeCard,
-  removeLike,
-};
+export { createCard, getAllCards, deleteCard, likeCard, removeLike };

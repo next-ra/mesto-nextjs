@@ -15,11 +15,10 @@ const MainHeader = () => {
 
   return (
     <header className={styles.header}>
-      <div>
-        <Link href="/">
-          <a className={styles.logo}>Mesto NextJS</a>
-        </Link>
-      </div>
+      <Link href="/">
+        <a className={styles.logo}>Mesto NextJS</a>
+      </Link>
+
       <nav className={styles.navigation}>
         <ul>
           {!session && !loading && (
@@ -31,7 +30,7 @@ const MainHeader = () => {
           {session && (
             <li>
               <Link href={isProfile ? '/' : '/profile'}>
-                {isProfile ? 'На главную' : 'В мой профиль'}
+                {isProfile ? 'Главная' : 'Профиль'}
               </Link>
             </li>
           )}

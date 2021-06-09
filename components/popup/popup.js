@@ -36,7 +36,7 @@ const Popup = ({ clickOutside, showPopupHandler }) => {
     if (popupState === 'addNewPlace') {
       const { name, link } = data;
       const result = await createCard(name, link, userId);
-      console.log(result);
+
       showPopupHandler();
       dispatch({
         type: SET_CARD,

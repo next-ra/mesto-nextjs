@@ -4,7 +4,7 @@
   background-color: #1a8ed1;
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 10%;
+  padding: clamp(0.2rem, 0.3rem, 0.5rem) clamp(1%, 8%, 10%);
   align-items: center;
   color: white;
   position: fixed;

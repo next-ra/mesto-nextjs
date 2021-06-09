@@ -11,7 +11,7 @@ async function handler(req, res) {
       let updateData = await {
         ...req.body,
       };
-      console.log(updateData, 'UPDATE_DATA');
+
       const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
         runValidators: true,
         new: true,
@@ -36,7 +36,6 @@ async function handler(req, res) {
   } catch (error) {
     res.status(error.status || 500);
     res.json({ message: error.message || 'something_went_wrong' });
-    console.log(error);
   }
 }
 export default handler;

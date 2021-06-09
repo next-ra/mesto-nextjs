@@ -4,7 +4,6 @@ import Card from '../../../models/card';
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     try {
-      console.log(req.body);
       await connectDB();
       const { name, link, owner } = req.body;
       const card = await Card.create({ name, link, owner });
@@ -21,12 +20,11 @@ const handler = async (req, res) => {
 
   if (req.method === 'DELETE') {
     try {
-      console.log(req.body, 'delete body');
       await connectDB();
       const { cardId } = req.body;
       const card = await Card.findByIdAndRemove(cardId);
       return res.status(201).json({
-        message: 'Success delete card',
+        message: 'Карточка успешно удалена',
         data: card,
       });
     } catch (err) {

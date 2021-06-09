@@ -5,17 +5,42 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #a5a5a5;
-  width: calc(100% - 400px);
+  width: calc(100% - 15vw);
   margin: auto;
+  padding-top: 0.4rem;
+}
+
+@media screen and (max-width: 500px) {
+  .header {
+    flex-direction: column;
+  }
+  .navigation ul {
+    justify-content: space-between;
+  }
+  .navigation {
+    width: 100%;
+  }
+  .logo {
+    align-self: flex-start;
+
+    text-align: left;
+  }
 }
 
 .logo {
-  font-size: 2rem;
+  display: block;
+  font-size: clamp(1.5rem, 7vw, 2rem);
   color: #fff;
+  width: 105px;
+}
+
+.navigation {
+  margin-bottom: 5px;
 }
 
 .navigation ul {
   list-style: none;
+
   margin: 0;
   padding: 0;
   display: flex;
@@ -27,19 +52,19 @@
 }
 
 .navigation a {
-  margin-right: 30px;
   text-decoration: none;
   color: white;
   font-weight: bold;
+  margin-right: 30px;
 }
 
 .navigation button {
   font: inherit;
   background-color: transparent;
-  border: 1px solid white;
+
   color: white;
   font-weight: bold;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
 }
 

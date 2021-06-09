@@ -12,7 +12,7 @@ import { initializeStore } from '../../redux/store';
 const ProfilePage = ({ showPopupHandler, showPopup, clickOutside }) => {
   const user = useSelector((state) => state.userReducer.user);
   const cards = useSelector((state) => state.cardsReducer.cards);
-  console.log(cards.length);
+
   return (
     <Fragment>
       <Profile userData={user} showPopupHandler={showPopupHandler} />;

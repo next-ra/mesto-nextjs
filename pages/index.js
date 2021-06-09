@@ -38,7 +38,7 @@ const HomePage = (props) => {
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
   const cards = await getAllCards();
-  console.log(cards, 'cards');
+
   const reduxStore = await initializeStore();
   const { dispatch } = reduxStore;
   if (session) {

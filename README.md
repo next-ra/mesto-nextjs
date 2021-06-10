@@ -2,7 +2,7 @@
 
 #### Переписанный на NextJS проект [Место](https://github.com/next-ra/mesto_frontend)
 
-[Демо](https://github.com/next-ra/mesto-nextjs)
+[Демо](http://mesto-nextjs.tk/)
 
 ### v1.0.0
 

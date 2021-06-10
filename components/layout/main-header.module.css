@@ -32,6 +32,8 @@
   font-size: clamp(1.5rem, 7vw, 2rem);
   color: #fff;
   width: 105px;
+  border: 1px solid #fff;
+  text-align: center;
 }
 
 .navigation {
